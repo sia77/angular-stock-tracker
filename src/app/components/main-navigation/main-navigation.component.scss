@@ -1,0 +1,19 @@
+
+ul{
+    list-style: none;
+    display: flex;
+}
+
+nav{
+    background-color: #0A101C;
+    height:53px;
+}
+
+li:active{
+    color:white;
+}
+
+.nav-link{
+    color:#fff;
+    text-decoration: none;
+}
