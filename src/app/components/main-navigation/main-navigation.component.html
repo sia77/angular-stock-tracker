@@ -1,10 +1,54 @@
-<nav>
-    <ul class="ul">
-        <li><a class="nav-link" routerLink = ""><img [src]="'/assets/menu-logo.svg'"></a></li>
-        <li><a class="nav-link" routerLink = "">Home</a></li>
-        <li><a class="nav-link" routerLink = "/about">About</a></li>
-        <li><a class="nav-link" routerLink = '/services'>Services</a></li>
-        <li><a class="nav-link" routerLink = '/services'>Services</a></li>
-        <li><a class="nav-link" routerLink = '/signUP'>Sign In</a></li>
+<div class="nav-container bg-stockTrackerBlack">
+    <nav class="max-w-[1220px] mx-auto flex justify-between items-center">
+        <div class=" ml-2">
+            <a class="text-white no-underline" routerLink = "">
+                <img [src]="'/assets/menu-logo.svg'" />
+            </a>
+        </div>
+        <ul class="list-none flex space-x-5 invisible md:visible">            
+            <li><a class="text-white no-underline " routerLink = "">Home</a></li>
+            <li><a class="text-white no-underline" routerLink = "/about">About</a></li>
+            <li><a class="text-white no-underline" routerLink = '/services'>Services</a></li>
+            <li><a class="text-white no-underline" routerLink = '/contact'>Contact Us</a></li>            
+        </ul>    
+        <div class="text-white  mr-4">
+            <div class="hidden md:block">
+                <a class="text-white no-underline" routerLink = '/signUP'>Sign In</a>
+            </div>
+            <!-- Hamburger icon for mobile -->
+            <div class = "md:hidden" (click)="toggleMenu()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu (hidden by default) -->
+    <ul [ngClass]="{'hidden': !isMenuOpen}"  class="list-none flex flex-col space-y-4 md:hidden hidden bg-stockTrackerBlack p-4 absolute top-16 left-0 w-full">
+        <li><a class="text-white no-underline" routerLink="">Home</a></li>
+        <li><a class="text-white no-underline" routerLink="/about">About</a></li>
+        <li><a class="text-white no-underline" routerLink="/services">Services</a></li>
+        <li><a class="text-white no-underline" routerLink="/contact">Contact Us</a></li>
+        <li class="h-px"></li>
+        <li><a class="text-white no-underline" routerLink = '/signUP'>Sign In</a></li>
     </ul>
-</nav>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+  
+  

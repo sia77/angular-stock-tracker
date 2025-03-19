@@ -6,7 +6,7 @@ import { MainNavigationComponent } from "./components/main-navigation/main-navig
   selector: 'app-root',
   imports: [RouterOutlet, MainNavigationComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'angular-stock-tracker';
