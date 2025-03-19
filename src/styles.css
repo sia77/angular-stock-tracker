@@ -3,11 +3,16 @@
 
 @theme{
     --color-stockTrackerBlack: #0A101C;
+    --color-stockTrackerBlackLight: #596479;
 }
 
 
 
 body{
     font-family: Roboto;
+}
+html, body {
+    height: 100%;
+    margin: 0;
 }
 
