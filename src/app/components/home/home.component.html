@@ -1,6 +1,19 @@
-<mat-card appearance="outlined">
-    <mat-card-content>Simple card</mat-card-content>
-  </mat-card>
+
+<div class="max-w-[1220px] mx-auto py-10">
+    <mat-card appearance="outlined">
+        <mat-card-content>
+        <canvas 
+            baseChart 
+            [data]="chartData" 
+            [options]="chartOptions" 
+            [type]="'line'"> 
+        </canvas>
+    
+    
+        </mat-card-content>
+      </mat-card>
+</div>
+
 
 
 
