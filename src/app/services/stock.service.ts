@@ -23,7 +23,7 @@ export class StockService {
     console.log("flag: ", environment.production);
 
     if(environment.production){
-      this.apiUrl += 'tickers?market=stocks&active=true&order=asc&limit=1000&sort=ticker&apiKey=SjnD9AU56EP7pIb2PPgJLNnijGp6w5qT';
+      this.apiUrl += 'tickers?market=stocks&active=true&order=asc&limit=1000&sort=ticker';
     }else{
       this.apiUrl += `ticker.json`;
     }
