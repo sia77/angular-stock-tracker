@@ -9,11 +9,10 @@ import { Observable } from 'rxjs';
 export class StockService {
   private apiUrl = environment.apiUrl;
   
-  
-  
   private headers = new HttpHeaders({
-    'Authorization': `Bearer ${environment.apiKey}`, // Some APIs use 'Authorization' with Bearer tokens
-    //'x-api-key': environment.apiKey,  // Some APIs use custom headers like 'x-api-key'
+    ...(environment.production
+      ? { Authorization: `Bearer ${environment.apiKey}` }
+      : { 'x-api-key': environment.apiKey })
   });
 
   constructor(private http: HttpClient) {}
