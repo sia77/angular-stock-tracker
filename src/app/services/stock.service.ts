@@ -13,7 +13,7 @@ export class StockService {
   
   private headers = new HttpHeaders({
     'Authorization': `Bearer ${environment.apiKey}`, // Some APIs use 'Authorization' with Bearer tokens
-    'x-api-key': environment.apiKey,  // Some APIs use custom headers like 'x-api-key'
+    //'x-api-key': environment.apiKey,  // Some APIs use custom headers like 'x-api-key'
   });
 
   constructor(private http: HttpClient) {}
