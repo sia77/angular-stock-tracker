@@ -21,7 +21,7 @@ export class SearchBarComponent {
   }
   
   ngOnInit() {
-    this.stockService.getStockData(this.ticker).subscribe(
+    this.stockService.getStockData(this.ticker.toUpperCase()).subscribe(
       (data) => {
         this.stockData = data;
         console.log('Stock Data:', this.stockData);
