@@ -9,11 +9,15 @@ import { Observable, of, tap } from 'rxjs';
 export class StockService {
   private apiUrl = environment.apiUrl;
   
-  private headers = new HttpHeaders({
-    ...(environment.production
-      ? { Authorization: `Bearer ${environment.apiKey}` ,'x-api-key': environment.apiKey  }
-      : { 'x-api-key': environment.apiKey })
+  // private headers = new HttpHeaders({
+  //   ...(environment.production
+  //     ? { Authorization: `Bearer ${environment.apiKey}` ,'x-api-key': environment.apiKey  }
+  //     : { 'x-api-key': environment.apiKey })
       
+  // });
+
+  private headers = new HttpHeaders({
+    'Authorization': `Bearer ${environment.apiKey}`, // Some APIs use 'Authorization' with Bearer tokens
   });
 
   private cache = new Map<string, any>(); // Cache to store search results
