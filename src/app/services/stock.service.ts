@@ -11,7 +11,7 @@ export class StockService {
   
   private headers = new HttpHeaders({
     ...(environment.production
-      ? { Authorization: `Bearer ${environment.apiKey}`, 'X-API-Key': environment.apiKey }
+      ? { Authorization: `Bearer ${environment.apiKey}` }
       : { 'X-API-Key': environment.apiKey })
       
   });
