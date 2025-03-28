@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Chart, ChartData, ChartOptions, registerables } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { StockService } from '../../services/stock.service';
 
 
 @Component({
@@ -13,24 +12,11 @@ import { StockService } from '../../services/stock.service';
 })
 export class HomeComponent {
 
-  stockData: any = [];
-
-  constructor(private stockService:StockService) {
+  constructor() {
     // Register Chart.js components
     Chart.register(...registerables);
   }
 
-  ngOnInit() {
-    this.stockService.getStockData().subscribe(
-      (data) => {
-        this.stockData = data;
-        console.log('Stock Data:', this.stockData);
-      },
-      (error) => {
-        console.error('Error fetching stock data:', error);
-      }
-    );
-  }
 
 
   chartData: ChartData<'line'> = {

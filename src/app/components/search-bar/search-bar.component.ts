@@ -3,6 +3,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon'
 import { FormsModule } from '@angular/forms';
+import { StockService } from '../../services/stock.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -12,5 +13,22 @@ import { FormsModule } from '@angular/forms';
 })
 export class SearchBarComponent {
 
-  ticker:string | undefined = 'a';
+  ticker:string = 'a';
+  stockData: any = [];
+
+  constructor(private stockService:StockService){
+    
+  }
+  
+  ngOnInit() {
+    this.stockService.getStockData(this.ticker).subscribe(
+      (data) => {
+        this.stockData = data;
+        console.log('Stock Data:', this.stockData);
+      },
+      (error) => {
+        console.error('Error fetching stock data:', error);
+      }
+    );
+  }
 }
