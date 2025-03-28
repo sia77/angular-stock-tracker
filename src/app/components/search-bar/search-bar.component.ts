@@ -4,6 +4,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon'
 import { FormsModule } from '@angular/forms';
 import { StockService } from '../../services/stock.service';
+import { debounceTime, distinctUntilChanged, Observable, Subject, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-search-bar',
@@ -12,23 +13,33 @@ import { StockService } from '../../services/stock.service';
   styleUrl: './search-bar.component.css'
 })
 export class SearchBarComponent {
+  ticker!: string;
+  stockData$!: Observable<any>;
+  private searchTerms = new Subject<string>();
 
-  ticker:string = 'a';
-  stockData: any = [];
+  constructor(private stockService: StockService) {}
 
-  constructor(private stockService:StockService){
-    
-  }
-  
-  ngOnInit() {
-    this.stockService.getStockData(this.ticker.toUpperCase()).subscribe(
-      (data) => {
-        this.stockData = data;
-        console.log('Stock Data:', this.stockData);
-      },
-      (error) => {
-        console.error('Error fetching stock data:', error);
-      }
+  ngOnInit(): void {
+    console.log("ngOnInit running...");
+
+    this.stockData$ = this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((ticker: string) => {
+        console.log("Making API call for:", ticker);
+        return this.stockService.getStockData(ticker.toUpperCase());
+      })
     );
+
+    // Subscribe to make sure it runs
+    this.stockData$.subscribe(data => {
+      console.log("Received stock data:", data);
+    });
+  }
+
+  search(ticker: string): void {
+    console.log("User typed:", ticker);
+    this.searchTerms.next(ticker);
   }
 }
+

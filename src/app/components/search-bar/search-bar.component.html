@@ -1,8 +1,8 @@
 <div class="max-w-[1220px] mx-auto py-3">
     <mat-form-field class="w-full">
         <mat-label>Search by Ticker Symbol</mat-label>
-        <input matInput type="text" [(ngModel)]="ticker">        
-          <button matSuffix mat-icon-button aria-label="Clear" (click)="ticker=''">
+        <input matInput type="text" [(ngModel)]="ticker" (input)="search(ticker)">        
+          <button matSuffix mat-icon-button aria-label="Clear" (click)="search('A')">
             <mat-icon matSuffix class="mr-4 transform rotate-y-180">search</mat-icon>
           </button>
       </mat-form-field>

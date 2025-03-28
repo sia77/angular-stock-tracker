@@ -11,8 +11,9 @@ export class StockService {
   
   private headers = new HttpHeaders({
     ...(environment.production
-      ? { Authorization: `Bearer ${environment.apiKey}` }
-      : { 'x-api-key': environment.apiKey })
+      ? { Authorization: `Bearer ${environment.apiKey}`, 'X-API-Key': environment.apiKey }
+      : { 'X-API-Key': environment.apiKey })
+      
   });
 
   private cache = new Map<string, any>(); // Cache to store search results
@@ -27,13 +28,15 @@ export class StockService {
     }
 
     if(environment.production){
-      this.apiUrl += 'tickers?market=stocks&active=true&order=asc&limit=500&sort=ticker';
+      this.apiUrl += 'tickers?market=stocks&active=true&order=asc&limit=100&sort=ticker';
     }else{
       this.apiUrl += `ticker.json`;
     }
 
+    console.log("service");
+
     // Perform API request
-    return this.http.get<any>(`${this.apiUrl}&ticker=${ticker}`).pipe(
+    return this.http.get<any>(`${this.apiUrl}&ticker=${ticker}`, {headers:this.headers}).pipe(
       tap(data => this.cache.set(ticker, data)) // Store in cache
     );
 
