@@ -1,0 +1,14 @@
+.snackbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    color: white;
+  }
+  mat-icon {
+    color: white;
+  }
+
+.snakBar-button{
+    height:24px;
+}

@@ -3,11 +3,12 @@ import { ErrorHandlerService } from '../services/error-handler.service';
 import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CustomSnackbarComponent } from '../shared/custom-snackbar/custom-snackbar.component';
 
 export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
   
   const errorService = inject(ErrorHandlerService);
-  const _snackBar = inject(MatSnackBar); // Inject dependencies manually 
+  const _snackBar = inject( MatSnackBar ); 
   
   
   return next(req).pipe(
@@ -15,15 +16,16 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
       let errorMessage = 'An unexpected error occurred';
         
       if (error.status === 429) {
-        errorMessage = 'You have reached the API request limit. Please try again later.';
+        errorMessage = 'You have reached the API request limit. Please try again in one minute.';
       } else if (error.status === 404) {
         errorMessage = 'Requested resource not found';
       } else if (error.status === 500) {
         errorMessage = 'Internal server error. Please try again later.';
       }
 
-      _snackBar.open(errorMessage, 'x', {
-        //duration: 5000,
+      _snackBar.openFromComponent(CustomSnackbarComponent, {
+        data: errorMessage,
+        duration: 5000,
         horizontalPosition: 'center',
         verticalPosition: 'top',
         panelClass: ['custom-snackbar'],
