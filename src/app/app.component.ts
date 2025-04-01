@@ -4,6 +4,7 @@ import { MainNavigationComponent } from "./components/main-navigation/main-navig
 import { FooterComponent } from "./components/footer/footer.component";
 import { SearchBarComponent } from "./components/search-bar/search-bar.component";
 
+
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, MainNavigationComponent, FooterComponent, SearchBarComponent],

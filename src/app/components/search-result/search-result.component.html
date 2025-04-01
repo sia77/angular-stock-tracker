@@ -1,0 +1,9 @@
+
+Search
+
+@for (item of tickerList; track item.ticker) {
+    <li>{{ item.name }} -- {{item.ticker}}</li>
+    } 
+@empty {
+    <li>There are no items.</li>
+}

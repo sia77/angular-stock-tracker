@@ -10,3 +10,23 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Interceptor */
+
+.custom-snackbar {
+    background-color: #dc3d3d;
+    color: white;
+    border-radius:5px; 
+    z-index:99999;
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__surface{
+    border-radius:5px !important;
+}
+                 
+.custom-snackbar .mat-mdc-snack-bar-action:hover {
+    background-color: orange !important;  /* Remove any background change */
+    color: white !important;  /* Keep the original icon color */
+    box-shadow: none !important;  /* Remove any shadow effect */
+    background:blue !important;
+  }
