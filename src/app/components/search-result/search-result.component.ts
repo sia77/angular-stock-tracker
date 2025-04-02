@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { StockService } from '../../services/stock.service';
 import { StockSearchResult } from '../../interface/StockSearchResult.ts';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-search-result',
-  imports: [],
+  imports: [MatButtonModule],
   templateUrl: './search-result.component.html',
   styleUrl: './search-result.component.css'
 })

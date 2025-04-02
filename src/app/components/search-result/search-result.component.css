@@ -1,0 +1,6 @@
+.ticker-button {
+    height: 25px;
+}
+::ng-deep .ticker-button .mat-mdc-button-touch-target{
+    height:25px !important;
+}

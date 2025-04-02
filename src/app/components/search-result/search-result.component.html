@@ -1,9 +1,15 @@
 
-Search
-
-@for (item of tickerList; track item.ticker) {
-    <li>{{ item.name }} -- {{item.ticker}}</li>
+<section class="max-w-[1220px] flex flex-wrap gap-y-4">
+    @for (item of tickerList; track item.ticker) {
+                
+        <div class="ml-2">
+            <button
+                mat-flat-button 
+                class="!bg-stockTrackerBlue !text-white ticker-button" 
+                >{{item.ticker}}</button>            
+        </div>
     } 
-@empty {
-    <li>There are no items.</li>
-}
+    @empty {
+        <li>There are no items.</li>
+    }
+</section>

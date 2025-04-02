@@ -31,12 +31,8 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
         panelClass: ['custom-snackbar'],
       });
 
-
       // Send the error message to a global error handling service
       errorService.setError(errorMessage);
-
-      // Optionally log it
-      console.error(errorMessage);
 
       return throwError(() => error);
     })
