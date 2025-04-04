@@ -6,7 +6,7 @@
             <button
                 mat-flat-button 
                 class="!bg-stockTrackerBlue !text-white ticker-button" 
-                >{{item.ticker}}</button>            
+                (click)="openAssetDetail(item.ticker)">{{item.ticker}}</button>            
         </div>
     } 
     @empty {

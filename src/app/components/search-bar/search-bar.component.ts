@@ -16,46 +16,20 @@ import { Router } from '@angular/router';
 export class SearchBarComponent {
   ticker!: string;
   limit:number = 20;
-  stockData$!: Observable<any>;
+  //stockData$!: Observable<any>;
   private searchTerms = new Subject<string>();
 
-  constructor(private stockService: StockService, 
-              private router: Router
-  ) {
+  constructor(private stockService:  StockService, private router: Router) { }
+
+  ngOnInit(): void {
     this.searchTerms.pipe(
-      debounceTime(300), // Wait 300ms after typing stops
-      distinctUntilChanged() // Ignore if the input is the same as the last
-    ).subscribe(
-      (ticker) =>{
-        this.stockService.getStockData(ticker.toUpperCase());
-        this.router.navigate(['/search-result']);
-      }); 
+      debounceTime(400),
+      distinctUntilChanged(),      
+    ).subscribe(data => {
+      this.stockService.getStockData(data.toUpperCase());
+      this.router.navigate(['/search-result']);
+    });
   }
-
-  // ngOnInit(): void {
-
-  //   this.stockData$ = this.searchTerms.pipe(
-  //     debounceTime(300),
-  //     distinctUntilChanged(),
-  //     switchMap((ticker: string) => {
-  //       console.log("Making API call for:", ticker);
-  //       return this.stockService.getStockData(ticker.toUpperCase());
-  //     })
-  //   );
-
-  //   // Subscribe to make sure it runs
-  //   this.stockData$.subscribe({
-  //     next: (data) => {
-  //       this.tickerList = data.results;
-  //       this.nextUrl = data.next_url;
-  //       this.tickerCount = data.count;
-  //       console.log("Result: ", data.results);
-
-  //     },
-  //     error: (err) => console.error("Error occurred:", err),
-  //     complete: () => console.log("Observable completed")
-  //   });
-  // }
 
   search(ticker: string): void {    
     this.searchTerms.next(ticker);
@@ -64,5 +38,12 @@ export class SearchBarComponent {
   clearSearchBar(){
     this.ticker='';
   }
+
+  ngOnDestroy(): void {
+    if (this.searchTerms) {
+      this.searchTerms.unsubscribe();
+    }
+  }
+
 }
 
