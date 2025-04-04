@@ -1,7 +1,7 @@
 <div>Hello</div>
 
 @if (assetDetail$ | async; as assetDetail) {
-    <div><img [src]='assetDetail.results.branding.icon_url' /></div>
+    <div><img [src]='assetDetail.results.branding?.icon_url' /></div>
     <div> {{assetDetail.results.name}}</div>
     <br />
     <div> {{assetDetail.results.homepage_url}}</div>

@@ -14,7 +14,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* Interceptor */
 
-.custom-snackbar {
+.custom-snackbar, .mat-mdc-snack-bar-container .mat-mdc-snackbar-surface {
     background-color: #dc3d3d !important;
     color: white;
     border-radius:5px; 
