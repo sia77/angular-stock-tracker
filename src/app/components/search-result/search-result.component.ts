@@ -1,8 +1,7 @@
-import { Component, Injector } from '@angular/core';
+import { Component } from '@angular/core';
 import { StockService } from '../../services/stock.service';
 import { ApiResponseArr, Asset } from '../../interface/assetInterfaces';
 import { MatButtonModule } from '@angular/material/button';
-import { Overlay } from '@angular/cdk/overlay';
 import { AssetDetailComponent } from '../asset-detail/asset-detail.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
@@ -22,7 +21,6 @@ export class SearchResultComponent {
     tickerCount:number = 0;
 
   constructor(  private stockService: StockService, 
-                private overlay: Overlay,
                 private dialog: MatDialog) {}
 
   ngOnInit(): void {
