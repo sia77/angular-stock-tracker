@@ -1,74 +1,65 @@
 
-<div class="flex flex-row-reverse mr-2 mt-2">
-    <button mat-icon-button (click)="closeDialog()" class="ml-2 cursor-pointer">
+<div class="flex flex-row-reverse">
+    <a (click)="closeDialog()" class="cursor-pointer mt-3 mr-3 close-button">
         <mat-icon>close</mat-icon>
-    </button>
+    </a>
 </div>
-    @if (assetDetail$ | async; as assetDetail) {
+@if (assetDetail$ | async; as assetDetail) {
 
-        <h2 mat-dialog-title id="company-dialog-title" aria-live="polite">
+    <h2 id="asset-dialog-title" aria-live="polite">
+        <div class="flex items-center">
+            <div class="mr-2">
+                <a href="{{assetDetail.results.homepage_url}}" target="_blank">
+                    @if(!assetDetail.results.branding?.icon_url){
+                        <div class="bg-black text-white text-[12px] font-semibold w-[45px] h-[45px] rounded-full flex justify-center items-center">
+                            {{ assetDetail.results.ticker }}
+                        </div>
+                    }
+                    @else {
+                        <img
+                        [src]="assetDetail.results.branding.icon_url + `?apikey=${apiKey}`"
+                        alt="{{ assetDetail.results.name }} logo"
+                        class="w-[45px] h-[45px] rounded-full"
+                        />
+                    }
+                </a>
+            </div>
+            <div>
+                {{ assetDetail.results.name || 'Loading asset name...' }}
+            </div>                        
+        </div>
+        <div class="flex items-baseline">
+            <div class="mr-1">$100</div>
+            <div class="text-sm">{{ assetDetail.results.currency_name | uppercase }}</div>            
+        </div>
+    </h2>
+    <hr class="h-px bg-gray-200 border-0 dark:bg-gray-700">
+    <mat-dialog-content>
+        <main>        
+            <section>
+                <h3>Key Metrics</h3>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>Mkt cap: {{assetDetail.results.market_cap | largeNumberFormat}}</div>
+                    <div>Market: {{assetDetail.results.market}}</div>                    
+                    <div>Exchange: {{assetDetail.results.primary_exchange}}</div>
+                    <!-- <div>list_date: {{ assetDetail.results.list_date }}</div> -->
+                    <!-- <div>round_lot: {{ assetDetail.results.round_lot }}</div> -->
+                    <!-- <div>share_class_shares_outstanding: {{ assetDetail.results.share_class_shares_outstanding }}</div>
 
-                <div>
-                    <img
-                    *ngIf="assetDetail.results.branding?.icon_url"
-                    [src]="assetDetail.results.branding.icon_url + `?apikey=${apiKey}`"
-                    alt="{{ assetDetail.results.name }} logo"
-                    width="40"
-                    height="40"
-                    style="vertical-align: middle; margin-right: 8px;"
-                    class="rounded-sm"
-                    />
-                    {{ assetDetail.results.name || 'Loading company...' }}
+                    <div>type: {{ assetDetail.results.type }}</div>
+                    <div>weighted_shares_outstanding: {{ assetDetail.results.weighted_shares_outstanding }}</div> -->
                 </div>
 
+            </section>
 
-        </h2>
-        
-          <mat-dialog-content>
-            <main>
-
-          
-              <section>
-                <h3>Key Metrics</h3>
-                market_cap
-                <!-- <p>Symbol: {{ company?.stockSymbol }}</p>
-                <p>Price: {{ company?.stockPrice }}</p> -->
-              </section>
-
-              <section>
+            <section>
                 <h3>Description</h3>
-                <p>{{ assetDetail.results.description }}</p>
-              </section>
-            </main>
-          </mat-dialog-content>
-
-
-        <!-- <div> {{assetDetail.results.homepage_url}}</div>
-        <br />
-        <div> {{assetDetail.results.description}}</div>
-        <br />
-        <div>total_employees: {{assetDetail.results.total_employees}}</div>
-        
-        composite_figi
-        currency_name
-        homepage_url
-        list_date 
-        locale
-        market
-        market_cap
-        primary_exchange
-        round_lot
-        share_class_figi
-        share_class_shares_outstanding
-        sic_code
-        sic_description
-        ticker
-        ticker_root
-        total_employees
-        type
-        weighted_shares_outstanding -->
-        
-    }
+                <p>{{ assetDetail.results.description ? assetDetail.results.description : 'No description available.' }}</p>
+            </section>
+        </main>
+    </mat-dialog-content>
+   
+}
 
 
 

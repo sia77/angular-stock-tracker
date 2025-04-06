@@ -7,12 +7,13 @@ import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment';
 import { MatIconModule } from '@angular/material/icon'
+import { LargeNumberFormatPipe } from "../../pipes/large-number-format.pipe";
 
 
 
 @Component({
   selector: 'app-asset-detail',
-  imports: [CommonModule, MatDialogModule, MatIconModule],
+  imports: [CommonModule, MatDialogModule, MatIconModule, LargeNumberFormatPipe],
   templateUrl: './asset-detail.component.html',
   styleUrl: './asset-detail.component.css'
 })
