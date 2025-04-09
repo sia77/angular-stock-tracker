@@ -4,62 +4,59 @@
         <mat-icon>close</mat-icon>
     </a>
 </div>
-@if (assetDetail$ | async; as assetDetail) {
-
-    <h2 id="asset-dialog-title" aria-live="polite">
-        <div class="flex items-center">
-            <div class="mr-2">
-                <a href="{{assetDetail.results.homepage_url}}" target="_blank">
-                    @if(!assetDetail.results.branding?.icon_url){
-                        <div class="bg-black text-white text-[12px] font-semibold w-[45px] h-[45px] rounded-full flex justify-center items-center">
-                            {{ assetDetail.results.ticker }}
-                        </div>
-                    }
-                    @else {
-                        <img
-                        [src]="assetDetail.results.branding.icon_url + `?apikey=${apiKey}`"
-                        alt="{{ assetDetail.results.name }} logo"
-                        class="w-[45px] h-[45px] rounded-full"
-                        />
-                    }
-                </a>
+<h2 id="asset-dialog-title" aria-live="polite">
+    <div class="flex items-center">
+        <div class="mr-2">
+            <a href="{{polygon_data?.homepage_url}}" target="_blank">
+                @if(!polygon_data?.branding?.icon_url){
+                    <div class="bg-black text-white text-[12px] font-semibold w-[45px] h-[45px] rounded-full flex justify-center items-center">
+                        {{ ticker }}
+                    </div>
+                }
+                @else {
+                    <img
+                    [src]="polygon_data?.branding?.icon_url + `?apikey=${apiKey}`"
+                    alt="{{ polygon_data.name }} logo"
+                    class="w-[45px] h-[45px] rounded-full"
+                    />
+                }
+            </a>
+        </div>
+        <div>
+            {{ polygon_data.name || 'Loading asset name...' }}
+        </div>                        
+    </div>
+    <div class="flex items-baseline">
+        <div class="mr-1">${{alpaca_bar?.c}}</div>
+        <div class="text-sm">{{ polygon_data.currency_name | uppercase }}</div>            
+    </div>
+</h2>
+<hr class="h-px bg-gray-200 border-0 dark:bg-gray-700">
+<mat-dialog-content>
+    <main>        
+        <section class="mb-[30px]">
+            <h3  class="title">Key Metrics</h3>
+            <div class="grid grid-cols-2 gap-2">
+                <div>Mkt cap: {{ polygon_data.market_cap ?  (polygon_data.market_cap | largeNumberFormat) : '---'}}</div>
+                <div>Market: {{ polygon_data.market ? polygon_data.market : '---' }}</div>                    
+                <div>Exchange: {{ polygon_data.primary_exchange ? polygon_data.primary_exchange : '---'}}</div>
+                <div>High: {{ alpaca_bar.h ? alpaca_bar.h : '---'}}</div>
+                <div>Low: {{ alpaca_bar.l ? alpaca_bar.l : '---'}}</div>
+                <div>Open: {{ alpaca_bar.o ? alpaca_bar.o : '---'}}</div>
+                <!-- <div>share_class_shares_outstanding: {{ assetDetail.results.share_class_shares_outstanding }}</div>
+                <div>weighted_shares_outstanding: {{ assetDetail.results.weighted_shares_outstanding }}</div> -->
             </div>
-            <div>
-                {{ assetDetail.results.name || 'Loading asset name...' }}
-            </div>                        
-        </div>
-        <div class="flex items-baseline">
-            <div class="mr-1">$100</div>
-            <div class="text-sm">{{ assetDetail.results.currency_name | uppercase }}</div>            
-        </div>
-    </h2>
-    <hr class="h-px bg-gray-200 border-0 dark:bg-gray-700">
-    <mat-dialog-content>
-        <main>        
-            <section>
-                <h3>Key Metrics</h3>
-                <div class="grid grid-cols-2 gap-2">
-                    <div>Mkt cap: {{assetDetail.results.market_cap | largeNumberFormat}}</div>
-                    <div>Market: {{assetDetail.results.market}}</div>                    
-                    <div>Exchange: {{assetDetail.results.primary_exchange}}</div>
-                    <!-- <div>list_date: {{ assetDetail.results.list_date }}</div> -->
-                    <!-- <div>round_lot: {{ assetDetail.results.round_lot }}</div> -->
-                    <!-- <div>share_class_shares_outstanding: {{ assetDetail.results.share_class_shares_outstanding }}</div>
 
-                    <div>type: {{ assetDetail.results.type }}</div>
-                    <div>weighted_shares_outstanding: {{ assetDetail.results.weighted_shares_outstanding }}</div> -->
-                </div>
+        </section>
 
-            </section>
-
-            <section>
-                <h3>Description</h3>
-                <p>{{ assetDetail.results.description ? assetDetail.results.description : 'No description available.' }}</p>
-            </section>
-        </main>
-    </mat-dialog-content>
+        <section class="mt-3">
+            <h3 class="title">Description</h3>
+            <div class="">{{ polygon_data.description ? polygon_data.description : 'No description available.' }}</div>
+        </section>
+    </main>
+</mat-dialog-content>
    
-}
+
 
 
 

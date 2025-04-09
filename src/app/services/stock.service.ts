@@ -10,10 +10,10 @@ import { initialValAPIRespArr } from '../shared/constants/constants'
 })
 export class StockService {
   private headers = new HttpHeaders({
-    'Authorization': `Bearer ${environment.apiKey}`, 
+    'Authorization': `Bearer ${environment.POLYGON_API_KEY}`, 
   });
 
-  private apiUrl = environment.apiUrl;
+  private apiUrl = environment.POLYGON_BASE_URL;
   
   private searchResultsSource = new BehaviorSubject<ApiResponseArr<Asset>>(initialValAPIRespArr);
   searchResults$ = this.searchResultsSource.asObservable();

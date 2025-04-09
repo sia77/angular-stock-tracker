@@ -19,7 +19,7 @@ export interface Asset {
   cik: string;
   composite_figi: string;
   currency_name: string;
-  last_updated_utc: string; // You might want to use Date, but keeping it as string for now.
+  last_updated_utc: string; 
   locale: string;
   market: string;
   name: string;
@@ -51,7 +51,7 @@ export interface AssetDetail {
   currency_name: string;
   description: string;
   homepage_url: string;
-  list_date: string; // You may want to use Date here as well, depending on your needs
+  list_date: string; 
   locale: string;
   market: string;
   market_cap: number;
@@ -68,5 +68,22 @@ export interface AssetDetail {
   total_employees: number;
   type: string;
   weighted_shares_outstanding: number;
+}
+
+export interface BarData {
+  c: number;        // Close price
+  h: number;        // High price
+  l: number;        // Low price
+  n: number;        // Number of trades
+  o: number;        // Open price
+  t: string;        // Timestamp (ISO string)
+  v: number;        // Volume
+  vw: number;       // Volume weighted average price
+}
+
+export interface BarsResponse {
+  bars: {
+    [ticker: string]: BarData;
+  };
 }
 

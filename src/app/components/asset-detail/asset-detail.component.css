@@ -6,4 +6,15 @@
 .close-button {
     height: 25px;
 }
+h3.title{
+    margin: 0 0 6px;
+    font-weight:450;
+}
+
+::ng-deep .mat-mdc-dialog-container .mat-mdc-dialog-content {
+    color: rgb(0 0 0);
+    font-size: 14px;
+    font-weight: normal;
+    letter-spacing: normal;
+}
 
