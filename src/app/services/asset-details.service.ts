@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
 import { ApiResponse, AssetDetail, BarsResponse } from '../interface/assetInterfaces';
 import { initialValAPIResp } from '../shared/constants/constants'
 
@@ -60,7 +60,7 @@ export class AssetDetailsService {
     const params = new HttpParams()
       .set('symbols',ticker);      
       
-    return this.http.get<any>(`${this.apiUrlAplaca}stocks/bars/latest`, {headers:this.headers_alpaca, params}).pipe(
+    return this.http.get<BarsResponse>(`${this.apiUrlAplaca}stocks/bars/latest`, {headers:this.headers_alpaca, params}).pipe(
       tap(data =>{
         this.latestBar.set(ticker, data);
       })  
@@ -68,7 +68,7 @@ export class AssetDetailsService {
 
   }
 
-  getDailyHistoricalBar(ticker:string):Observable<any>{
+  getDailyHistoricalBar(ticker:string):Observable<number>{
 
     const today = new Date();
     today.setDate(today.getDate() - 1);
@@ -90,10 +90,13 @@ export class AssetDetailsService {
       return this.http.get<any>(`${this.apiUrlAplaca}stocks/bars`, {headers:this.headers_alpaca, params}).pipe(
         tap(data => {
           this.historicalBars.set(ticker, data);
+        }),
+        map((data)=>{
+          const barsData = data.bars[ticker];
+          const total = barsData.reduce((sum:number, bar:any)=> sum += bar.vw ,0);
+          return total/barsData.length;
+
         })
       )
-
-
-
   }
 }

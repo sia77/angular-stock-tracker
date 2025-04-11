@@ -23,12 +23,12 @@
             </a>
         </div>
         <div>
-            {{ polygon_data.name || 'Loading asset name...' }}
+            {{ polygon_data?.name || 'Loading asset name...' }}
         </div>                        
     </div>
     <div class="flex items-baseline">
-        <div class="mr-1">${{alpaca_bar?.c}}</div>
-        <div class="text-sm">{{ polygon_data.currency_name | uppercase }}</div>            
+        <div class="mr-1">${{alpaca_bar?.c ? alpaca_bar.c.toFixed(2) : '---'}}</div>
+        <div class="text-sm">{{ polygon_data?.currency_name | uppercase }}</div>            
     </div>
 </h2>
 <hr class="h-px bg-gray-200 border-0 dark:bg-gray-700">
@@ -37,21 +37,39 @@
         <section class="mb-[30px]">
             <h3  class="title">Key Metrics</h3>
             <div class="grid grid-cols-2 gap-2">
-                <div>Mkt cap: {{ polygon_data.market_cap ?  (polygon_data.market_cap | largeNumberFormat) : '---'}}</div>
-                <div>Market: {{ polygon_data.market ? polygon_data.market : '---' }}</div>                    
-                <div>Exchange: {{ polygon_data.primary_exchange ? polygon_data.primary_exchange : '---'}}</div>
-                <div>High: {{ alpaca_bar.h ? alpaca_bar.h : '---'}}</div>
-                <div>Low: {{ alpaca_bar.l ? alpaca_bar.l : '---'}}</div>
-                <div>Open: {{ alpaca_bar.o ? alpaca_bar.o : '---'}}</div>
-                <!-- <div>share_class_shares_outstanding: {{ assetDetail.results.share_class_shares_outstanding }}</div>
-                <div>weighted_shares_outstanding: {{ assetDetail.results.weighted_shares_outstanding }}</div> -->
+                <div>Mkt cap: {{ polygon_data?.market_cap ?  (polygon_data.market_cap | largeNumberFormat) : '---'}}</div>
+                <div>Market: {{ polygon_data?.market ? polygon_data?.market : '---' }}</div>                    
+                <div>Exchange: {{ polygon_data?.primary_exchange ? polygon_data.primary_exchange : '---'}}</div>
+                <div>High: {{ alpaca_bar?.h ? alpaca_bar.h.toFixed(2) : '---'}}</div>
+                <div>Low: {{ alpaca_bar?.l ? alpaca_bar.l.toFixed(2) : '---'}}</div>
+                <div>Open: {{ alpaca_bar?.o ? alpaca_bar.o.toFixed(2) : '---'}}</div>
+                <!-- <div>share_class_shares_outstanding: {{  polygon_data?.share_class_shares_outstanding }}</div>
+                <div>weighted_shares_outstanding: {{  polygon_data?.weighted_shares_outstanding }}</div> Could be use to calculate -->
+                <!--
+                Net Income (for profitability)
+                Revenue (for top-line performance)
+                P/E ratio (for valuation)
+                Market Cap (for company size)
+                Dividends (for shareholder returns)
+                Free Cash Flow (for financial stability)
+                -->
             </div>
 
         </section>
 
         <section class="mt-3">
             <h3 class="title">Description</h3>
-            <div class="">{{ polygon_data.description ? polygon_data.description : 'No description available.' }}</div>
+            <div class="">{{ polygon_data?.description ? polygon_data.description : 'No description available.' }}</div>
+        </section>
+        <section class="mt-3">
+            <h3 class="title">News</h3>
+            @for (item of newsList; track item.headline;) {
+                @if($index < MAX_NEW_ITEM){
+                    <div>
+                        <a [href]="item.url" target="_blank">{{item.headline}}</a>
+                    </div>                    
+                }                
+            }
         </section>
     </main>
 </mat-dialog-content>

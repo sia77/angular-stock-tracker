@@ -25,7 +25,7 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
 
       _snackBar.openFromComponent(CustomSnackbarComponent, {
         data: errorMessage,
-        duration: 5000,
+        duration: 10000,
         horizontalPosition: 'center',
         verticalPosition: 'top',
         panelClass: ['custom-snackbar'],
