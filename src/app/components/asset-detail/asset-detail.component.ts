@@ -2,20 +2,21 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AssetDetailsService } from '../../services/asset-details.service';
-import { ApiResponse, AssetDetail, BarData, BarsResponse } from '../../interface/assetInterfaces';
-import { Observable, Subscription, zip } from 'rxjs';
+import { AssetProfile, AssetMetrics, BarData } from '../../interface/assetInterfaces';
+import { Observable, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment';
 import { MatIconModule } from '@angular/material/icon'
 import { LargeNumberFormatPipe } from "../../pipes/large-number-format.pipe";
 import { AssetNewsService } from '../../services/asset-news.service';
 import { NewsItem } from '../../interface/news';
+import { ShortExchangeNamePipe } from "../../pipes/short-exchange-name.pipe";
 
 
 
 @Component({
   selector: 'app-asset-detail',
-  imports: [CommonModule, MatDialogModule, MatIconModule, LargeNumberFormatPipe],
+  imports: [CommonModule, MatDialogModule, MatIconModule, LargeNumberFormatPipe, ShortExchangeNamePipe],
   templateUrl: './asset-detail.component.html',
   styleUrl: './asset-detail.component.css'
 })
@@ -23,21 +24,23 @@ import { NewsItem } from '../../interface/news';
 export class AssetDetailComponent implements OnInit {
 
   assetDetail$!: Observable<any>;
-  apiKey = environment.POLYGON_API_KEY;
-  polygon_data!:AssetDetail;
+  //apiKey = environment.POLYGON_API_KEY;
+  hub_data!:AssetProfile;
   alpaca_bar!:BarData;
   newsList!:NewsItem[];
+  merticAssets!:AssetMetrics;
 
   MAX_NEW_ITEM:number = 5;
 
   alpaca_historical_bar!:BarData[];
   private assetDetailSub!:Subscription; 
   private assetBarSub!:Subscription;
-  private dailyHistoricalBars!:Subscription;
+  //private dailyHistoricalBars!:Subscription;
   private assetNews!:Subscription;
+  private additonalMetrics!:Subscription;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public ticker: string,
+    @Inject(MAT_DIALOG_DATA) public dialogBoxData: any,
     private assetDetailsService: AssetDetailsService,
     private assetNewsService: AssetNewsService,
     private dialogRef: MatDialogRef<AssetDetailComponent> // Needed for closing dialog
@@ -52,38 +55,46 @@ export class AssetDetailComponent implements OnInit {
     const formattedYesterday = yesterday.toISOString().split('T')[0];
                                 
 
-    this.assetDetailSub = this.assetDetailsService.getAssetDetail(this.ticker.toUpperCase()).subscribe({
+    this.assetDetailSub = this.assetDetailsService.getAssetDetail(this.dialogBoxData.ticker.toUpperCase()).subscribe({
       next: (data)=>{
-        this.polygon_data = data.results;
-        //console.log("Details: ", this.polygon_data);
+        this.hub_data = data;
       }
     })
 
     this.assetBarSub = this.assetDetailsService
-      .getLatestBarInfo(this.ticker.toUpperCase())
+      .getLatestBarInfo(this.dialogBoxData.ticker.toUpperCase())
       .subscribe({
         next: (data)=>{
-          this.alpaca_bar = data.bars[this.ticker.toUpperCase()];
-          //console.log("bar data: ", this.alpaca_bar);
+          this.alpaca_bar = data.bars[this.dialogBoxData.ticker.toUpperCase()];
+          console.log("bar data: ", this.alpaca_bar);
         }
       });
 
-    this.dailyHistoricalBars = this.assetDetailsService
-      .getDailyHistoricalBar(this.ticker.toUpperCase())
+    // this.dailyHistoricalBars = this.assetDetailsService
+    //   .getDailyHistoricalBar(this.ticker.toUpperCase())
+    //   .subscribe({
+    //     next: (data)=>{
+    //       console.log("data bar: ", data);
+    //       //this.alpaca_historical_bar = data.bars[this.ticker.toUpperCase()];
+    //       console.log("bar data: ", this.alpaca_historical_bar);
+    //     }
+    //   });
+
+
+    this.additonalMetrics = this.assetDetailsService
+      .getAdditionalAssetMetrics(this.dialogBoxData.ticker.toUpperCase())
       .subscribe({
-        next: (data)=>{
-          console.log("data bar: ", data);
-          //this.alpaca_historical_bar = data.bars[this.ticker.toUpperCase()];
-          console.log("bar data: ", this.alpaca_historical_bar);
+        next: (data) => {
+          console.log("metrics: ", data);
+          this.merticAssets = data;
         }
       });
 
     this.assetNews = this.assetNewsService
-      .getNewsService(this.ticker.toUpperCase(), formattedDate, formattedDate)
+      .getNewsService(this.dialogBoxData.ticker.toUpperCase(), formattedDate, formattedDate)
       .subscribe({
         next: (data)=>{
-          this.newsList = data;
-          console.log("data:", data);
+          this.newsList = data;          
         }
       });
 
@@ -93,11 +104,16 @@ export class AssetDetailComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  isEmptyObject(obj: any): boolean {
+    return obj && Object.keys(obj).length === 0 && obj.constructor === Object;
+  }
+
   ngOnDestroy(): void {
     this.assetDetailSub?.unsubscribe();
     this.assetBarSub?.unsubscribe();
-    this.dailyHistoricalBars?.unsubscribe();
+    //this.dailyHistoricalBars?.unsubscribe();
     this.assetNews?.unsubscribe();
+    this.additonalMetrics?.unsubscribe();
   }
 }
 

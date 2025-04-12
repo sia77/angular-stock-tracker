@@ -3,9 +3,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon'
 import { FormsModule } from '@angular/forms';
-import { StockService } from '../../services/stock.service';
-import { debounceTime, distinctUntilChanged, Observable, Subject, switchMap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { SearchAssetService } from '../../services/search-asset.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -19,14 +19,15 @@ export class SearchBarComponent {
   //stockData$!: Observable<any>;
   private searchTerms = new Subject<string>();
 
-  constructor(private stockService:  StockService, private router: Router) { }
+  constructor(private searchAssetService: SearchAssetService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.searchTerms.pipe(
       debounceTime(400),
       distinctUntilChanged(),      
     ).subscribe(data => {
-      this.stockService.getStockData(data.toUpperCase());
+      this.searchAssetService.assetSearch(data);
       this.router.navigate(['/search-result']);
     });
   }

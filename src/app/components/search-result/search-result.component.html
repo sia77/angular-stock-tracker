@@ -1,12 +1,12 @@
 
 <section class="max-w-[1220px] flex flex-wrap gap-y-4">
-    @for (item of tickerList; track item.ticker) {
+    @for (item of tickerList; track item.symbol) {
                 
         <div class="ml-2">
             <button
                 mat-flat-button 
                 class="!bg-stockTrackerBlue !text-white ticker-button" 
-                (click)="openAssetDetail(item.ticker)">{{item.ticker}}</button>            
+                (click)="openAssetDetail(item.symbol, item.description)">{{item.symbol}}</button>            
         </div>
     } 
     @empty {

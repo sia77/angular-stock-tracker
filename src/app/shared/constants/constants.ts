@@ -1,4 +1,19 @@
-import { ApiResponse, ApiResponseArr } from "../../interface/assetInterfaces";
+import { AssetProfile, SearchResponse } from "../../interface/assetInterfaces";
 
-export const initialValAPIRespArr:ApiResponseArr<any> = { results: [], next_url: '', count: 0, status:'OK', request_id:'12345' };  
-export const initialValAPIResp:ApiResponse<any> = { results: [], status:'OK', request_id:'1111111' };
+
+export const initialValAPIResp:AssetProfile = { 
+    country: '', 
+    currency: '', 
+    estimateCurrency: '', 
+    exchange: '', 
+    finnhubIndustry: '', 
+    ipo: '', 
+    logo: '', 
+    marketCapitalization: 0,
+    name: '',
+    phone: '',
+    shareOutstanding: 0,
+    ticker: '',
+    weburl: ''
+};
+export const initialValAPIHubRes:SearchResponse = { count : 0, result:[]};

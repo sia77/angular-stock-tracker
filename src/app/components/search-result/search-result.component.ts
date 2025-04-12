@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { StockService } from '../../services/stock.service';
-import { ApiResponseArr, Asset } from '../../interface/assetInterfaces';
+import { SearchResponse, SearchResultItem } from '../../interface/assetInterfaces';
 import { MatButtonModule } from '@angular/material/button';
 import { AssetDetailComponent } from '../asset-detail/asset-detail.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { SearchAssetService } from '../../services/search-asset.service';
 
 
 @Component({
@@ -13,34 +13,28 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
   styleUrl: './search-result.component.css'
 })
 export class SearchResultComponent {  
-    tickerList:Asset[] = [];
+    tickerList:SearchResultItem[] = [];
     limit:number = 20;
     status!:string;
     errorMessage!:string;
     nextUrl!:string | undefined;
     tickerCount:number = 0;
 
-  constructor(  private stockService: StockService, 
+  constructor(  private searchAssetService: SearchAssetService,
                 private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.stockService.searchResults$.subscribe(
-      {
-        next: (data:ApiResponseArr<Asset>)=>{ 
-          console.log("data: ", data);         
-          this.tickerList = data.results;
-          this.nextUrl = data.next_url;
-          this.tickerCount = data.count;
-          this.status = data.status;          
-        },
-        error: (err) => console.error("Error occurred:", err),
+
+    this.searchAssetService.searchResults$.subscribe({
+      next: (data:SearchResponse)=>{
+        this.tickerList = data.result;
       }
-    );
+    })
   }
 
-  openAssetDetail(ticker: string) {
+  openAssetDetail(ticker: string, name:string) {
     this.dialog.open(AssetDetailComponent, {
-      data: ticker,  
+      data: {ticker:ticker,name:name},  
       width: '600px', 
       height: '700px'
     });

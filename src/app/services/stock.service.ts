@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, of, retry, tap, throwError } from 'rxjs';
-import { ApiResponseArr, Asset } from '../interface/assetInterfaces';
-import { initialValAPIRespArr } from '../shared/constants/constants'
+import { AssetProfile } from '../interface/assetInterfaces';
+import { initialValAPIResp } from '../shared/constants/constants'
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class StockService {
 
   private apiUrl = environment.POLYGON_BASE_URL;
   
-  private searchResultsSource = new BehaviorSubject<ApiResponseArr<Asset>>(initialValAPIRespArr);
+  private searchResultsSource = new BehaviorSubject<AssetProfile>(initialValAPIResp);
   searchResults$ = this.searchResultsSource.asObservable();
   private cache = new Map<string, any>(); // Cache to store search results
 
@@ -40,7 +40,7 @@ export class StockService {
         .set('sort', 'ticker');
 
     if (!ticker.trim()) {
-      this.searchResultsSource.next(initialValAPIRespArr); // Clear results if input is empty
+      this.searchResultsSource.next(initialValAPIResp); // Clear results if input is empty
       return;
     }
 
