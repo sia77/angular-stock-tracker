@@ -67,9 +67,8 @@ export interface BarData {
 }
 
 export interface BarsResponse {
-  bars: {
-    [ticker: string]: BarData;
-  };
+  bar: BarData;
+  symbol:string;
 }
 
 export interface AssetMetrics {

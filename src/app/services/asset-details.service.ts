@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
-import { BarsResponse, AssetMetrics, AssetProfile } from '../interface/assetInterfaces';
+import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
+import { AssetMetrics, AssetProfile, BarsResponse } from '../interface/assetInterfaces';
 import { initialValAPIResp } from '../shared/constants/constants'
 
 @Injectable({
@@ -57,13 +57,20 @@ export class AssetDetailsService {
 
   getLatestBarInfo(ticker:string):Observable<BarsResponse>{
 
-    const params = new HttpParams()
-      .set('symbols',ticker);      
-      
-    return this.http.get<BarsResponse>(`${this.apiUrlAplaca}stocks/bars/latest`, {headers:this.headers_alpaca, params}).pipe(
+    if(this.latestBar.has(ticker)){
+      return of(this.latestBar.get(ticker)!);
+    }
+
+    return this.http.get<BarsResponse>(`${this.apiUrlAplaca}stocks/${ticker}/bars/latest`, {headers:this.headers_alpaca}).pipe(
       tap(data =>{
         this.latestBar.set(ticker, data);
-      })  
+      }),
+       catchError(error => {
+        return of({
+          bar: undefined,
+          errorMessage: error.message || 'Unknown error'
+        } as any); 
+      }) 
     )
 
   }

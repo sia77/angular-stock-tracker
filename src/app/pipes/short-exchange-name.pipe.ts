@@ -18,7 +18,15 @@ export class ShortExchangeNamePipe implements PipeTransform {
       'NEW YORK STOCK EXCHANGE, INC.': 'NYSE',
       'TORONTO STOCK EXCHANGE': 'TSX',
       'OSLO BORS ASA': 'Oslo Børs',
-      'TSX VENTURE EXCHANGE - NEX': 'TSX Venture'
+      'TSX VENTURE EXCHANGE - NEX': 'TSX Venture',
+      'NYSE EURONEXT - EURONEXT PARIS':'Euronext Paris',
+      'NASDAQ OMX NORDIC': 'Nasdaq Nordic',
+      'WARSAW STOCK EXCHANGE/EQUITIES/MAIN MARKET': 'Warsaw SE',
+      'NYSE EURONEXT - EURONEXT LISBON': 'Euronext Lisbon',
+      'NYSE EURONEXT - EURONEXT BRUSSELS': 'Euronext Brussels',
+      'NYSE EURONEXT - EURONEXT AMSTERDAM': 'Euronext Amsterdam',
+      'PRAGUE STOCK EXCHANGE': 'Prague SE',
+      'WIENER BOERSE AG DRITTER MARKT (THIRD MARKET)': 'Vienna SE - Third Market',
     };
 
     return map[value] || value;

@@ -28,8 +28,10 @@
             </div>                        
         </div>
         <div class="flex items-baseline">
-            <div class="mr-1">${{alpaca_bar?.c ? alpaca_bar.c.toFixed(2) : '---'}}</div>
-            <div class="text-sm">{{ hub_data?.currency| uppercase }}</div>            
+            @if(alpaca_bar?.c){
+                <div class="mr-1">{{alpaca_bar.c.toFixed(2) | currency:hub_data?.currency}}</div>
+                <div class="text-sm">{{ hub_data?.currency| uppercase }}</div> 
+            }           
         </div>
     </h2>
     <hr class="h-px bg-gray-200 border-0 dark:bg-gray-700">
@@ -46,7 +48,7 @@
                     <div>52W high: {{ merticAssets.metric['52WeekHigh'] ? merticAssets.metric['52WeekHigh'].toFixed(2) : '---' }}</div>                
                     <div>P/E: {{ (merticAssets.metric.epsTTM && alpaca_bar?.h) ? ((alpaca_bar.h)/(merticAssets.metric.epsTTM)).toFixed(2) : '---' }}</div>
                     <div>52W low: {{ merticAssets.metric['52WeekLow'] ? merticAssets.metric['52WeekLow'].toFixed(2) : '---' }}</div>
-                    <div>Yield: {{ (merticAssets.metric?.currentDividendYieldTTM) ? merticAssets.metric.currentDividendYieldTTM.toFixed(2) : '---' }}%</div>
+                    <div>Yield: {{ (merticAssets.metric?.currentDividendYieldTTM) ? merticAssets.metric.currentDividendYieldTTM.toFixed(2) + '%': '---' }}</div>
                 </div>
     
             </section>
@@ -54,12 +56,20 @@
                 <h3 class="title">News</h3>
                 @for (item of newsList; track item.headline;) {
                     @if($index < MAX_NEW_ITEM){
-                        <div class="mb-1">
-                            <a class="leading-3" [href]="item.url" target="_blank">{{item.headline}}</a>
-                        </div>                    
+                        @if($even){
+                            <div class="bg-blue-50">
+                                <a [href]="item.url" target="_blank">{{item.headline}}</a>
+                            </div> 
+                        }
+                        @else {
+                            <div class="bg-red-50">
+                                <a [href]="item.url" target="_blank">{{item.headline}}</a>
+                            </div>
+                        }
+                   
                     }                
                 }
-                @if(newsList.length === 0){
+                @if(newsList?.length === 0){
                     <div>No news at this time!</div>
                 }
             </section>

@@ -5,7 +5,6 @@ import { AssetDetailsService } from '../../services/asset-details.service';
 import { AssetProfile, AssetMetrics, BarData } from '../../interface/assetInterfaces';
 import { Observable, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { environment } from '../../../environments/environment';
 import { MatIconModule } from '@angular/material/icon'
 import { LargeNumberFormatPipe } from "../../pipes/large-number-format.pipe";
 import { AssetNewsService } from '../../services/asset-news.service';
@@ -24,7 +23,6 @@ import { ShortExchangeNamePipe } from "../../pipes/short-exchange-name.pipe";
 export class AssetDetailComponent implements OnInit {
 
   assetDetail$!: Observable<any>;
-  //apiKey = environment.POLYGON_API_KEY;
   hub_data!:AssetProfile;
   alpaca_bar!:BarData;
   newsList!:NewsItem[];
@@ -65,8 +63,8 @@ export class AssetDetailComponent implements OnInit {
       .getLatestBarInfo(this.dialogBoxData.ticker.toUpperCase())
       .subscribe({
         next: (data)=>{
-          this.alpaca_bar = data.bars[this.dialogBoxData.ticker.toUpperCase()];
-          console.log("bar data: ", this.alpaca_bar);
+          this.alpaca_bar = data.bar;   
+          console.log("latest bar: ", this.alpaca_bar);       
         }
       });
 
