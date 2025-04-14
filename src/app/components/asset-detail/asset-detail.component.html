@@ -39,12 +39,7 @@
         <main> 
             @if(alpaca_historical_bar){
                 <section class="mb-[30px]">
-                    <canvas 
-                        baseChart 
-                        [data]="chartData" 
-                        [options]="chartOptions" 
-                        [type]="'line'"> 
-                    </canvas>
+                    <app-chart [barsData]="alpaca_historical_bar"></app-chart>
                 </section> 
             } 
      
