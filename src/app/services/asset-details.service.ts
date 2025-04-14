@@ -82,7 +82,7 @@ export class AssetDetailsService {
       .set('start', start)
       .set('end',end)
       .set('limit',1000)
-      .set('adjustment','raw')
+      .set('adjustment','split')
       .set('feed', 'sip')
       .set('sort', 'asc'); 
 
