@@ -36,7 +36,18 @@
     </h2>
     <hr class="h-px bg-gray-200 border-0 dark:bg-gray-700">
     <mat-dialog-content>
-        <main>        
+        <main> 
+            @if(alpaca_historical_bar){
+                <section class="mb-[30px]">
+                    <canvas 
+                        baseChart 
+                        [data]="chartData" 
+                        [options]="chartOptions" 
+                        [type]="'line'"> 
+                    </canvas>
+                </section> 
+            } 
+     
             <section class="mb-[30px]">
                 <h3  class="title">Key Metrics</h3>
                 <div class="grid grid-cols-2 gap-2">
@@ -45,10 +56,10 @@
                     <div>High: {{ alpaca_bar?.h ? alpaca_bar.h.toFixed(2) : '---'}}</div>
                     <div>Open: {{ alpaca_bar?.o ? alpaca_bar.o.toFixed(2) : '---'}}</div>
                     <div>Low: {{ alpaca_bar?.l ? alpaca_bar.l.toFixed(2) : '---'}}</div>                
-                    <div>52W high: {{ merticAssets.metric['52WeekHigh'] ? merticAssets.metric['52WeekHigh'].toFixed(2) : '---' }}</div>                
-                    <div>P/E: {{ (merticAssets.metric.epsTTM && alpaca_bar?.h) ? ((alpaca_bar.h)/(merticAssets.metric.epsTTM)).toFixed(2) : '---' }}</div>
-                    <div>52W low: {{ merticAssets.metric['52WeekLow'] ? merticAssets.metric['52WeekLow'].toFixed(2) : '---' }}</div>
-                    <div>Yield: {{ (merticAssets.metric?.currentDividendYieldTTM) ? merticAssets.metric.currentDividendYieldTTM.toFixed(2) + '%': '---' }}</div>
+                    <div>52W high: {{ merticAssets?.metric ? merticAssets.metric['52WeekHigh'].toFixed(2) : '---' }}</div>                
+                    <div>P/E: {{ (merticAssets?.metric && alpaca_bar?.h) ? ((alpaca_bar.h)/(merticAssets.metric.epsTTM)).toFixed(2) : '---' }}</div>
+                    <div>52W low: {{ merticAssets?.metric ? merticAssets.metric['52WeekLow'].toFixed(2) : '---' }}</div>
+                    <div>Yield: {{ (merticAssets?.metric?.currentDividendYieldTTM) ? merticAssets.metric.currentDividendYieldTTM.toFixed(2) + '%': '---' }}</div>
                 </div>
     
             </section>

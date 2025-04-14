@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
-import { AssetMetrics, AssetProfile, BarsResponse } from '../interface/assetInterfaces';
+import { AssetMetrics, AssetProfile, BarResponse, HistoricalBarsResponse } from '../interface/assetInterfaces';
 import { initialValAPIResp } from '../shared/constants/constants'
 
 @Injectable({
@@ -55,13 +55,13 @@ export class AssetDetailsService {
 
   }
 
-  getLatestBarInfo(ticker:string):Observable<BarsResponse>{
+  getLatestBarInfo(ticker:string):Observable<BarResponse>{
 
     if(this.latestBar.has(ticker)){
       return of(this.latestBar.get(ticker)!);
     }
 
-    return this.http.get<BarsResponse>(`${this.apiUrlAplaca}stocks/${ticker}/bars/latest`, {headers:this.headers_alpaca}).pipe(
+    return this.http.get<BarResponse>(`${this.apiUrlAplaca}stocks/${ticker}/bars/latest`, {headers:this.headers_alpaca}).pipe(
       tap(data =>{
         this.latestBar.set(ticker, data);
       }),
@@ -75,37 +75,23 @@ export class AssetDetailsService {
 
   }
 
-  // getDailyHistoricalBar(ticker:string):Observable<number>{
+  getDailyHistoricalBar(ticker:string, start:string, end:string):Observable<HistoricalBarsResponse>{
 
-  //   const today = new Date();
-  //   today.setDate(today.getDate() - 1);
-  //   const datePart = today.toISOString().split('T')[0];
+    const params = new HttpParams()
+      .set('timeframe','1Month')
+      .set('start', start)
+      .set('end',end)
+      .set('limit',1000)
+      .set('adjustment','raw')
+      .set('feed', 'sip')
+      .set('sort', 'asc'); 
 
-  //   const start = `${datePart}T13:00:00Z`;
-  //   const end = `${datePart}T20:00:00Z`;
-
-  //   const params = new HttpParams()
-  //     .set('symbols',ticker)
-  //     .set('timeframe','1T')
-  //     .set('start', start)
-  //     .set('end',end)
-  //     .set('limit',1000)
-  //     .set('adjustment','raw')
-  //     .set('feed', 'sip')
-  //     .set('sort', 'asc'); 
-
-  //     return this.http.get<any>(`${this.apiUrlAplaca}stocks/bars`, {headers:this.headers_alpaca, params}).pipe(
-  //       tap(data => {
-  //         this.historicalBars.set(ticker, data);
-  //       }),
-  //       map((data)=>{
-  //         const barsData = data.bars[ticker];
-  //         const total = barsData.reduce((sum:number, bar:any)=> sum += bar.vw ,0);
-  //         return total/barsData.length;
-
-  //       })
-  //     )
-  // }
+      return this.http.get<any>(`${this.apiUrlAplaca}stocks/${ticker}/bars`, {headers:this.headers_alpaca, params}).pipe(
+        tap(data => {
+          this.historicalBars.set(ticker, data);
+        })
+      )
+  }
 
 
   getAdditionalAssetMetrics(ticker:string):Observable<AssetMetrics>{

@@ -36,7 +36,7 @@ export class SearchResultComponent {
     this.dialog.open(AssetDetailComponent, {
       data: {ticker:ticker,name:name},  
       width: '600px', 
-      height: '700px'
+      height: 'auto'
     });
   }
 
