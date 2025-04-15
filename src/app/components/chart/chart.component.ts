@@ -2,16 +2,18 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, 
 import { Chart, ChartConfiguration, ChartData, ChartOptions, ChartType, registerables } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { BarData } from '../../interface/assetInterfaces';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-chart',
   imports: [BaseChartDirective],
   templateUrl: './chart.component.html',
-  styleUrl: './chart.component.css'
+  styleUrl: './chart.component.css',
+  providers: [DatePipe],
 })
 export class ChartComponent implements AfterViewInit, OnDestroy {
 
-  constructor(private cdr: ChangeDetectorRef){
+  constructor(private cdr: ChangeDetectorRef, private datePipe: DatePipe){
     Chart.register(...registerables);
   }
 
@@ -34,10 +36,8 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
     this.resizeObserver = new ResizeObserver(() => {
       clearTimeout(this.resizeTimeout);
       this.resizeTimeout = setTimeout(() => {
-      //requestAnimationFrame(() => {
         this.applyResponsiveOptions();
         this.drawChart(this.barsData());
-      //});
       }, 200); // debounce
     });
 
@@ -48,7 +48,8 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
 
     if(!barData) return;    
     
-    const lineCharLabels = barData.map(item => item.t.split('T')[0]);
+    const lineCharLabels = barData.map(item => this.datePipe.transform(item.t.split('T')[0], 'MM/yy') || '');
+    
     const lineChartData = barData.map(item => item.c);
     const volumeData = barData.map(item => item.v);
 
@@ -91,7 +92,6 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
     };
 
     setTimeout(() => {
-      console.log("setTimeout");
       this.chart?.chart?.destroy();
       this.chart?.render();
     });

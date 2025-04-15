@@ -7,6 +7,7 @@ import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { SearchAssetService } from '../../services/search-asset.service';
 
+
 @Component({
   selector: 'app-search-bar',
   imports: [MatFormFieldModule, MatInputModule, MatIconModule, FormsModule],
@@ -16,7 +17,6 @@ import { SearchAssetService } from '../../services/search-asset.service';
 export class SearchBarComponent {
   ticker!: string;
   limit:number = 20;
-  //stockData$!: Observable<any>;
   private searchTerms = new Subject<string>();
 
   constructor(private searchAssetService: SearchAssetService,
@@ -38,6 +38,7 @@ export class SearchBarComponent {
 
   clearSearchBar(){
     this.ticker='';
+    this.searchTerms.next("");
   }
 
   ngOnDestroy(): void {
