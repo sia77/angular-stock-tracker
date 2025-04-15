@@ -32,13 +32,13 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
     this.applyResponsiveOptions();
 
     this.resizeObserver = new ResizeObserver(() => {
-      //clearTimeout(this.resizeTimeout);
-      //this.resizeTimeout = setTimeout(() => {
-      requestAnimationFrame(() => {
+      clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = setTimeout(() => {
+      //requestAnimationFrame(() => {
         this.applyResponsiveOptions();
         this.drawChart(this.barsData());
-      });
-      //}, 200); // debounce
+      //});
+      }, 200); // debounce
     });
 
     this.resizeObserver.observe(this.chartWrapperRef.nativeElement);
@@ -70,7 +70,7 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.resizeObserver?.disconnect();
-    //clearTimeout(this.resizeTimeout);
+    clearTimeout(this.resizeTimeout);
   }
 
   private applyResponsiveOptions(): void {
@@ -83,7 +83,7 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
 
     this.chartOptions = {
       responsive: true,
-      maintainAspectRatio: true,
+      maintainAspectRatio: false,
       aspectRatio: isPortrait ? 1 : 2, // 1:1 for portrait, 2:1 for landscape
       plugins: {
         legend: { display: true },
