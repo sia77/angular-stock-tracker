@@ -10,6 +10,15 @@
         </div>
     } 
     @empty {
-        <li>There are no items.</li>
+        @switch (tickerCount) {
+            
+            @case (0){
+                <h3 class="w-full flex justify-center">No item matched your search query...</h3>
+            } 
+
+            @case(-1){
+                <h3 class="w-full flex justify-center">Using searchbox, lookup your desired ticker...</h3>
+            }            
+        }
     }
 </section>

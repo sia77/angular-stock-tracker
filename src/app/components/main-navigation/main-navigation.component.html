@@ -16,7 +16,7 @@
                 <a class="text-white no-underline" routerLink = '/signUP'>Sign In</a>
             </div>
             <!-- Hamburger icon for mobile -->
-            <div class = "md:hidden" (click)="toggleMenu()">
+            <div class = "burger_icon md:hidden" (click)="toggleMenu()">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
@@ -25,13 +25,13 @@
     </nav>
 
     <!-- Mobile Menu (hidden by default) -->
-    <ul [ngClass]="{'hidden': !isMenuOpen}"  class="list-none flex flex-col space-y-4 md:hidden hidden bg-stockTrackerBlack p-4 absolute top-16 left-0 w-full z-[9999]">
-        <li><a class="text-white no-underline" routerLink="">Home</a></li>
-        <li><a class="text-white no-underline" routerLink="/about">About</a></li>
-        <li><a class="text-white no-underline" routerLink="/services">Services</a></li>
-        <li><a class="text-white no-underline" routerLink="/contact">Contact Us</a></li>
+    <ul [ngClass]="{'hidden': !isMenuOpen}"  class="menu list-none flex flex-col space-y-4 md:hidden hidden bg-stockTrackerBlack p-4 absolute top-16 left-0 w-full z-[9999]">
+        <li><a class="text-white no-underline" routerLink="" (click)="toggleMenu()">Home</a></li>
+        <li><a class="text-white no-underline" routerLink="/about" (click)="toggleMenu()">About</a></li>
+        <li><a class="text-white no-underline" routerLink="/services" (click)="toggleMenu()">Services</a></li>
+        <li><a class="text-white no-underline" routerLink="/contact" (click)="toggleMenu()">Contact Us</a></li>
         <li class="h-px"></li>
-        <li><a class="text-white no-underline" routerLink = '/signUP'>Sign In</a></li>
+        <li><a class="text-white no-underline" routerLink = '/signUP' (click)="toggleMenu()">Sign In</a></li>
     </ul>
 </div>
 
