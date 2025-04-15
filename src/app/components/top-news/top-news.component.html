@@ -1,0 +1,14 @@
+<h2>Top News</h2>
+@if(topNews$ | async; as topNews){
+
+    @for(item of topNews; track item.id){
+        <div class="mb-[10px]">
+            <a href={{item.url}} target="_blank">
+                <div class="flex items-center">
+                    <img class="w-[40px] h-[40px] rounded-full mr-3" src={{item.image}} />
+                    <div>{{ item.headline }}</div>
+                </div>
+            </a>
+        </div>
+    }
+}
