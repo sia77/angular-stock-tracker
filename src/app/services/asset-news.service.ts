@@ -37,7 +37,6 @@ export class AssetNewsService {
   }
 
   private newsItems: TopNewsItem[] = [];
-  private newsItemsPaged: TopNewsItem[] = [];
   private topNewsSubject = new ReplaySubject<TopNewsItem[]>(1);
   private allNewsItemsLoaded = new BehaviorSubject<boolean>(false);
   allNewsItemsLoaded$ = this.allNewsItemsLoaded.asObservable();
@@ -81,9 +80,7 @@ export class AssetNewsService {
         );
 
         this.currentPage++;
-
-        this.newsItemsPaged = [...nextItems];
-        this.topNewsSubject.next( this.newsItemsPaged);
+        this.topNewsSubject.next( nextItems);
         this.dataFetched = true;
 
         if (nextItems.length === this.newsItems.length) {
