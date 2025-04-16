@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, ReplaySubject, tap } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { TopNewsItem } from '../interface/news';
 
@@ -36,13 +36,67 @@ export class AssetNewsService {
     );    
   }
 
-  getTopNews():Observable<TopNewsItem[]>{
+  private newsItems: TopNewsItem[] = [];
+  private newsItemsPaged: TopNewsItem[] = [];
+  private topNewsSubject = new ReplaySubject<TopNewsItem[]>(1);
+  private allNewsItemsLoaded = new BehaviorSubject<boolean>(false);
+  allNewsItemsLoaded$ = this.allNewsItemsLoaded.asObservable();
+
+  private currentPage = 0;
+  private pageSize = 10;
+  private dataFetched = false;
+  gotAllnewsItems = false;
+
+
+  getTopNewsPage(): Observable<TopNewsItem[]> {
 
     const params = new HttpParams()
       .set('category', 'general')
       .set('token', environment.FINNHUB_API_KEY);
 
-    return this.http.get<any>(`${this.apiUrl}news`, {params});
+      if (this.dataFetched) {
+        const nextItems = this.newsItems.slice(
+          this.currentPage * this.pageSize,
+          (this.currentPage + 1) * this.pageSize
+        );
+    
+        this.currentPage++;
+        const accumulatedResultSet = this.newsItems.slice(0, this.currentPage * this.pageSize);
+        this.topNewsSubject.next(accumulatedResultSet);
 
+        if(accumulatedResultSet.length === this.newsItems.length){
+          this.allNewsItemsLoaded.next(true);
+        }
+        
+        return of(accumulatedResultSet); 
+      }
+
+    return this.http.get<TopNewsItem[]>(`${this.apiUrl}news`, { params }).pipe(
+      tap(fetched => {
+        // slice and append only the next chunk
+        this.newsItems = fetched;
+        const nextItems = this.newsItems.slice(
+          this.currentPage * this.pageSize,
+          (this.currentPage + 1) * this.pageSize
+        );
+
+        this.currentPage++;
+
+        this.newsItemsPaged = [...nextItems];
+        this.topNewsSubject.next( this.newsItemsPaged);
+        this.dataFetched = true;
+
+        if (nextItems.length === this.newsItems.length) {
+          this.allNewsItemsLoaded.next(true);
+        }
+
+      })
+    );
   }
+
+  news$(): Observable<TopNewsItem[]> {
+    return this.topNewsSubject.asObservable();
+  }
+
+
 }
