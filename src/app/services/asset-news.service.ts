@@ -44,7 +44,6 @@ export class AssetNewsService {
   private currentPage = 0;
   private pageSize = 10;
   private dataFetched = false;
-  gotAllnewsItems = false;
 
 
   getTopNewsPage(): Observable<TopNewsItem[]> {
@@ -93,6 +92,16 @@ export class AssetNewsService {
 
   news$(): Observable<TopNewsItem[]> {
     return this.topNewsSubject.asObservable();
+  }
+
+  resetNews(): void {
+    let emptyList: TopNewsItem[] = [];
+    console.log("hello");
+    this.newsItems = [];
+    this.currentPage = 0;
+    this.dataFetched = false;
+    this.allNewsItemsLoaded.next(false);
+    this.topNewsSubject.next(emptyList);
   }
 
 

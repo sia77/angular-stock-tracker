@@ -1,50 +1,56 @@
 <h2>Top News</h2>
 <div class="mb-[20px]">
-    @if(topNews$ | async; as topNews){
 
-        @for(item of topNews; track item.id){
-            <div class="mb-[10px]">
-                <a href={{item.url}} target="_blank">
-                    <div class="flex items-center">
-                        <img class="w-[40px] h-[40px] rounded-full mr-3" src={{item.image}} />
-                        <div>{{ item.headline }}</div>
-                    </div>
-                </a>
-            </div>
+    
+    
+    @if(!loading){
+        @if(topNews$ | async; as topNews){
+
+            @for(item of topNews; track item.id){
+                <div class="mb-[10px]">
+                    <a href={{item.url}} target="_blank">
+                        <div class="flex items-center">
+                            <img class="w-[40px] h-[40px] rounded-full mr-3" src={{item.image}} />
+                            <div>{{ item.headline }}</div>
+                        </div>
+                    </a>
+                </div>
+            }
+    
+            <div class="w-full flex justify-center">
+                <button 
+                class="
+                  mb-[20px]
+                  mt-[20px]                    
+                  bg-transparent 
+                  cursor-pointer 
+                  hover:bg-stockTrackerBlue 
+                  text-stockTrackerBlue 
+                  font-semibold 
+                  hover:text-white 
+                  py-2 
+                  px-4 
+                  border 
+                  border-stockTrackerBlue 
+                  hover:border-transparent 
+                  rounded
+                  disabled:opacity-50 
+                  disabled:cursor-not-allowed
+                " 
+                [disabled]="newsItemsLoaded" 
+                (click)="getMore()"
+              >
+                More
+              </button>
+            </div>           
+    
+        }
+        @else {
+            <div class="flex justify-center"> <h3>No news items are available at this time!</h3></div>
         }
 
-        <div class="w-full flex justify-center">
-            <button 
-            class="
-              mb-[20px]
-              mt-[20px]                    
-              bg-transparent 
-              cursor-pointer 
-              hover:bg-stockTrackerBlue 
-              text-stockTrackerBlue 
-              font-semibold 
-              hover:text-white 
-              py-2 
-              px-4 
-              border 
-              border-stockTrackerBlue 
-              hover:border-transparent 
-              rounded
-              disabled:opacity-50 
-              disabled:cursor-not-allowed
-            " 
-            [disabled]="newsItemsLoaded" 
-            (click)="getMore()"
-          >
-            More
-          </button>
-        </div>
-        
-
     }
-    @else {
-        <div class="flex justify-center"> <h3>No news items are available at this time!</h3></div>
-    }
+    <app-spinner [loading]="loading"></app-spinner>
 
 </div>
 
