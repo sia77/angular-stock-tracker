@@ -30,7 +30,6 @@ export class SearchBarComponent {
 
   ngOnInit(): void {
     this.searchTerms.pipe(
-      tap((data)=> console.log("testing:", data)),
       debounceTime(400),
       distinctUntilChanged(), 
       filter(this.isNonEmptyString)  //Added this because it was causing a redirect in the service emitting a initial value on empty queries. We handle blank queries here 

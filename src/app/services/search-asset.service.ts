@@ -24,7 +24,6 @@ export class SearchAssetService {
 
     // If we already searched for this term, return cached results
     if (this.cache.has(query)) {
-      console.log("cache");
       this.searchResultsSource.next(this.cache.get(query)!);
       return;
     }

@@ -24,8 +24,7 @@ export class HomeComponent implements OnInit {
     const tickerList1 = ['AAPL', 'NVDA', "F", "TSLA", "GOOG", "MSFT", "META", "APD", "ABNB", "ALL", "AIG"];
 
     this.performance$ = this.assetSymbols.getListOfAssetSymbols().pipe(
-      switchMap((tickerList2:any) => {
-        //console.log(tickerList2);        
+      switchMap((tickerList2:any) => {     
         return this.assetDetailsService.getAssetsSnapshot([...tickerList1, ...tickerList2.slice(0, 100)]);
       })
     );

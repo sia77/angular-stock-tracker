@@ -91,7 +91,6 @@ export class AssetNewsService {
 
   resetNews(): void {
     let emptyList: TopNewsItem[] = [];
-    console.log("hello");
     this.newsItems = [];
     this.currentPage = 0;
     this.dataFetched = false;
