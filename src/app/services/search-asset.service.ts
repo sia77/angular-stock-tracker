@@ -22,13 +22,9 @@ export class SearchAssetService {
 
   assetSearch(query:string):void{
 
-    if (!query.trim()) {
-      this.searchResultsSource.next(initialValAPIHubRes); // Clear results if input is empty
-      return;
-    }
-
     // If we already searched for this term, return cached results
     if (this.cache.has(query)) {
+      console.log("cache");
       this.searchResultsSource.next(this.cache.get(query)!);
       return;
     }

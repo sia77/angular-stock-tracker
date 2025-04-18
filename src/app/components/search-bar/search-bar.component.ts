@@ -3,7 +3,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon'
 import { FormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, Subject, Subscription, tap } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { SearchAssetService } from '../../services/search-asset.service';
 
@@ -24,23 +24,31 @@ export class SearchBarComponent {
 
   private routerSub!: Subscription;
 
+  isNonEmptyString(value: string): boolean {
+    return value.trim().length > 0;
+  }
+
   ngOnInit(): void {
     this.searchTerms.pipe(
+      tap((data)=> console.log("testing:", data)),
       debounceTime(400),
-      distinctUntilChanged(),      
+      distinctUntilChanged(), 
+      filter(this.isNonEmptyString)  //Added this because it was causing a redirect in the service emitting a initial value on empty queries. We handle blank queries here 
     ).subscribe(data => {
       this.searchAssetService.assetSearch(data);
-      this.router.navigate(['/search-result']);
+      if (this.router.url !== '/search-result') {
+        this.router.navigate(['/search-result']);
+      }
     });
 
-    // this.routerSub = this.router.events.subscribe(event => {
-    //   if (event instanceof NavigationEnd) {
-    //     const isOnSearchPage = event.urlAfterRedirects.includes('/search-result');
-    //     if (!isOnSearchPage) {
-    //       this.clearSearchBar() // Reset if not on search page
-    //     }
-    //   }
-    // });
+    this.routerSub = this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const isOnSearchPage = event.urlAfterRedirects.includes('/search-result');
+        if (!isOnSearchPage) {
+          this.clearSearchBar() // Reset if not on search page
+        }
+      }
+    });
   }
 
   search(ticker: string): void {    
