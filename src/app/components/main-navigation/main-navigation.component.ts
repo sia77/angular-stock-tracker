@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
-import { NavigationStart, Router, RouterModule } from '@angular/router';
-import { AssetNewsService } from '../../services/asset-news.service';
-import { filter } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-main-navigation',
@@ -12,16 +10,7 @@ import { filter } from 'rxjs';
 })
 export class MainNavigationComponent {
   isMenuOpen = false;  // Variable to control the menu visibility
-
-  constructor(private router:Router, private newsService:AssetNewsService){}
-
-  // ngOnInit(){
-  //   this.router.events
-  //   .pipe(filter(event => event instanceof NavigationStart))
-  //   .subscribe(() => {
-  //     this.newsService.resetNews(); // Reset whenever navigation starts
-  //   });
-  // }
+  
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;  // Toggle the menu open/close state

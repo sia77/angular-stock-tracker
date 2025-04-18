@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.development';
 import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
-import { AssetMetrics, AssetProfile, BarResponse, HistoricalBarsResponse } from '../interface/assetInterfaces';
+import { assetDelta, AssetMetrics, assetPerformance, AssetProfile, BarResponse, HistoricalBarsResponse } from '../interface/assetInterfaces';
 import { initialValAPIResp } from '../shared/constants/constants'
 
 @Injectable({
@@ -111,10 +111,46 @@ export class AssetDetailsService {
       tap((data)=> this.metrics.set(ticker, data))
     );
   }
-  
 
+  getAssetsSnapshot(tickers:string[]):Observable<assetPerformance>{
 
+    const params = new HttpParams()
+      .set("symbols", tickers.join(','));
 
+      return this.http.get<any>(`${this.apiUrlAplaca}stocks/snapshots`, {
+        headers: this.headers_alpaca,
+        params
+      }).pipe(
+        map(snapshot => {
+          const gainers: assetDelta[] = [];
+          const losers: assetDelta[] = [];
+          const mostActive: assetDelta[] = [];
+      
+          for (const ticker in snapshot) {
+            const data = snapshot[ticker];
+      
+            const prevClose = data.prevDailyBar?.c;
+            const todayClose = data.dailyBar?.c;
+      
+            if (prevClose && todayClose) {
+              const percentChange = ((todayClose - prevClose) / prevClose) * 100;
+      
+              const entry = { ticker, delta: +percentChange.toFixed(2) }; // convert to number for sorting
+              percentChange > 0 ? gainers.push(entry) : losers.push(entry);
+              mostActive.push(entry);
+
+            }
+          }
+      
+          // Sort both lists
+          gainers.sort((a, b) => b.delta - a.delta); // descending
+          losers.sort((a, b) => a.delta - b.delta);  // ascending (most negative first)
+          mostActive.sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta) )
+      
+          return { gainers, losers, mostActive };
+        })
+      );
+  }  
 }
 
 

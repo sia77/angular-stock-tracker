@@ -69,3 +69,27 @@ export interface SearchResponse {
   result: SearchResultItem[];
 }
 
+export interface assetDelta{
+  ticker: string; 
+  delta: number;
+}
+
+export interface assetPerformance {
+  gainers:assetDelta[];
+  losers:assetDelta[];
+  mostActive:assetDelta[];
+}
+
+export interface SymbolDetails {
+  currency: string;
+  description: string;
+  displaySymbol: string;
+  figi: string;
+  isin: string | null;
+  mic: string;
+  shareClassFIGI: string;
+  symbol: string;
+  symbol2: string;
+  type: string;
+}
+

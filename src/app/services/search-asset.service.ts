@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { SearchResponse } from '../interface/assetInterfaces';
 import { initialValAPIHubRes } from '../shared/constants/constants';
@@ -15,6 +15,10 @@ export class SearchAssetService {
   private cache = new Map<string, SearchResponse>();
   private searchResultsSource = new BehaviorSubject<SearchResponse>(initialValAPIHubRes);
   searchResults$ = this.searchResultsSource.asObservable();
+
+  private resetSearchSource = new Subject<string>();
+  resetSearch$ = this.resetSearchSource.asObservable();
+
 
   assetSearch(query:string):void{
 
@@ -41,5 +45,4 @@ export class SearchAssetService {
     });
 
   }
-
 }

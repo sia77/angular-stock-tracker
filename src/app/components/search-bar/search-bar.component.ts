@@ -3,8 +3,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon'
 import { FormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
-import { Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged, Subject, Subscription } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
 import { SearchAssetService } from '../../services/search-asset.service';
 
 
@@ -22,6 +22,8 @@ export class SearchBarComponent {
   constructor(private searchAssetService: SearchAssetService,
               private router: Router) { }
 
+  private routerSub!: Subscription;
+
   ngOnInit(): void {
     this.searchTerms.pipe(
       debounceTime(400),
@@ -30,6 +32,15 @@ export class SearchBarComponent {
       this.searchAssetService.assetSearch(data);
       this.router.navigate(['/search-result']);
     });
+
+    // this.routerSub = this.router.events.subscribe(event => {
+    //   if (event instanceof NavigationEnd) {
+    //     const isOnSearchPage = event.urlAfterRedirects.includes('/search-result');
+    //     if (!isOnSearchPage) {
+    //       this.clearSearchBar() // Reset if not on search page
+    //     }
+    //   }
+    // });
   }
 
   search(ticker: string): void {    
@@ -42,9 +53,9 @@ export class SearchBarComponent {
   }
 
   ngOnDestroy(): void {
-    if (this.searchTerms) {
-      this.searchTerms.unsubscribe();
-    }
+    this.searchTerms?.unsubscribe();
+    this.routerSub?.unsubscribe();
+
   }
 
 }

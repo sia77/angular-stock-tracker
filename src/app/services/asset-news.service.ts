@@ -53,10 +53,6 @@ export class AssetNewsService {
       .set('token', environment.FINNHUB_API_KEY);
 
       if (this.dataFetched) {
-        const nextItems = this.newsItems.slice(
-          this.currentPage * this.pageSize,
-          (this.currentPage + 1) * this.pageSize
-        );
     
         this.currentPage++;
         const accumulatedResultSet = this.newsItems.slice(0, this.currentPage * this.pageSize);
@@ -85,7 +81,6 @@ export class AssetNewsService {
         if (nextItems.length === this.newsItems.length) {
           this.allNewsItemsLoaded.next(true);
         }
-
       })
     );
   }

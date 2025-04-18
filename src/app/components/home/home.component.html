@@ -1,4 +1,89 @@
+<div class="flex justify-center">
 
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-[300px] md:w-[600px] lg:w-[1000px]">
+        <div>            
+            <mat-card class="card" appearance="outlined">
+                <mat-card-header class="bg-black">
+                <h4 class="text-white">Most active</h4>
+                </mat-card-header>
+                
+                <mat-card-content>
+                    @if( performance$ | async; as assets ){
+                        @for(item of assets.mostActive; track item.ticker){
+                            @if($index < MAX_NEW_ITEM){
+
+                                <div class="flex justify-between mt-[12px]">
+                                    <div>{{item.ticker}}</div>
+                                    <div [ngClass]="item.delta < 0 ? 'text-stockTrackerRed' : 'text-green-600'">
+                                        {{ item.delta > 0 ? '+' + (item.delta | number:'1.2-2') : (item.delta | number:'1.2-2') }}%
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div>
+            <mat-card class="card" appearance="outlined">
+                <mat-card-header class="bg-black">
+                   <h4 class="text-white">Top gainers</h4>
+                </mat-card-header>
+                
+                <mat-card-content>
+                    @if( performance$ | async; as assets ){
+                        @for(item of assets.gainers; track item.ticker){
+        
+                            @if($index < MAX_NEW_ITEM){
+                                <div class="flex justify-between mt-[12px]">
+                                    <div>{{item.ticker}}</div>
+                                    <div [ngClass]="item.delta < 0 ? 'text-stockTrackerRed' : 'text-green-600'">
+                                        {{ item.delta > 0 ? '+' + (item.delta | number:'1.2-2') : (item.delta | number:'1.2-2') }}%
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div>
+            
+            <mat-card class="card" appearance="outlined">
+                <mat-card-header class="bg-black">
+                <h4 class="text-white">Top losers</h4>
+                </mat-card-header>
+                
+                <mat-card-content>
+                    @if( performance$ | async; as assets ){
+                        @for(item of assets.losers; track item.ticker){
+                            @if($index < MAX_NEW_ITEM){
+
+                                <div class="flex justify-between mt-[12px]">
+                                    <div>{{item.ticker}}</div>
+                                    <div [ngClass]="item.delta < 0 ? 'text-stockTrackerRed' : 'text-green-600'">
+                                        {{ item.delta > 0 ? '+' + (item.delta | number:'1.2-2') : (item.delta | number:'1.2-2') }}%
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+</div>
 
 
 

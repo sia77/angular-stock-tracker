@@ -17,19 +17,25 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
         
       if (error.status === 429) {
         errorMessage = 'You have reached the API request limit. Please try again in one minute.';
-      } else if (error.status === 404) {
-        errorMessage = 'Requested resource not found';
-      } else if (error.status === 500) {
+      } 
+      // else if (error.status === 404) {
+      //   errorMessage = 'Requested resource not found';
+      // } 
+      else if (error.status === 500) {
         errorMessage = 'Internal server error. Please try again later.';
       }
 
-      _snackBar.openFromComponent(CustomSnackbarComponent, {
-        data: errorMessage,
-        duration: 3000,
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-        panelClass: ['custom-snackbar'],
-      });
+      if(error.status !== 404){
+        _snackBar.openFromComponent(CustomSnackbarComponent, {
+          data: errorMessage,
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['custom-snackbar'],
+        });
+      }
+
+
 
       // Send the error message to a global error handling service
       errorService.setError(errorMessage);
