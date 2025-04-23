@@ -11,7 +11,7 @@ export const environment = {
     ALPACA_BASE_URL:'https://data.alpaca.markets/v2/',
 
     //finnhub.io
-    FINNHUB_API_KEY:'cvs43o9r01qvc2mukti0cvs43o9r01qvc2muktig',
+    FINNHUB_API_KEY:'d0292g1r01qt2u32of1gd0292g1r01qt2u32of20',
     FINNHUB_API_SECRET:'cvs43o9r01qvc2muktjg',
     FINNHUB_BASE_URL:'https://finnhub.io/api/v1/'
 

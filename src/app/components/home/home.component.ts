@@ -18,18 +18,9 @@ export class HomeComponent implements OnInit {
 
   MAX_NEW_ITEM:number = 6;
   constructor( private assetDetailsService:AssetDetailsService, private assetSymbols:AssetSymbolsService ) { }
-  performance$!:Observable<assetPerformance>;
+  performance$!:Observable<any>;
 
   ngOnInit(){
-    const tickerList1 = ['AAPL', 'NVDA', "F", "TSLA", "GOOG", "MSFT", "META", "APD", "ABNB", "ALL", "AIG"];
-
-    this.performance$ = this.assetSymbols.getListOfAssetSymbols().pipe(
-      switchMap((tickerList2:any) => {     
-        return this.assetDetailsService.getAssetsSnapshot([...tickerList1, ...tickerList2.slice(0, 100)]);
-      })
-    );
-
-
-   
+    this.performance$ = this.assetSymbols.getAssetsPerformance();   
   }
 }
