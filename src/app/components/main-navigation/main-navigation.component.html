@@ -1,6 +1,6 @@
 <div class="nav-container bg-stockTrackerBlack">
     <nav class="max-w-[1220px] mx-auto flex justify-between items-center">
-        <div class=" ml-2">
+        <div class="">
             <a class="text-white no-underline" routerLink = "">
                 <img [src]="'/assets/menu-logo.svg'" />
             </a>
@@ -23,7 +23,7 @@
                 </svg>
             </div>
         </div>
-    </nav>
+    </nav>     
 
     <!-- Mobile Menu (hidden by default) -->
     <ul [ngClass]="{'hidden': !isMenuOpen}"  class="menu list-none flex flex-col space-y-4 md:hidden hidden bg-stockTrackerBlack p-4 absolute top-16 left-0 w-full z-[9999]">

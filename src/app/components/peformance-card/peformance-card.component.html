@@ -1,0 +1,31 @@
+<div [ngClass]="alignment">            
+    <mat-card class="w-[300px]" appearance="outlined">
+        <mat-card-header class="bg-black">
+        <h4 class="text-white">{{title}}</h4>
+        </mat-card-header>
+        
+        <mat-card-content>            
+                @for(item of data; track item.ticker){
+                    @if($index < maxNum){
+
+                        <div class="flex justify-between mt-[12px] px-2 transition-colors duration-200 hover:bg-gray-100">
+                            <div>{{item.ticker}}</div>
+                            <div [ngClass]="item.delta < 0 ? 'text-stockTrackerRed' : 'text-green-600'">
+                                @if(item.delta > 0){
+                                    <span class="material-icons !text-sm">
+                                        north_east
+                                    </span>
+                                }
+                                @else{
+                                    <span class="material-icons !text-sm">
+                                        south_east
+                                    </span>
+                                }
+                                {{ item.delta > 0 ? '+' + (item.delta | number:'1.2-2') : (item.delta | number:'1.2-2') }}%
+                            </div>
+                        </div>
+                    }
+                }
+        </mat-card-content>
+    </mat-card>
+</div>
