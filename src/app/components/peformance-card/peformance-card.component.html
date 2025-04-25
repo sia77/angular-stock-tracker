@@ -10,18 +10,21 @@
 
                         <div class="flex justify-between mt-[12px] px-2 transition-colors duration-200 hover:bg-gray-100">
                             <div>{{item.ticker}}</div>
-                            <div [ngClass]="item.delta < 0 ? 'text-stockTrackerRed' : 'text-green-600'">
+                            <div [ngClass]="item.delta < 0 ? 'text-stockTrackerRed flex' : 'text-green-600 flex'">
                                 @if(item.delta > 0){
-                                    <span class="material-icons !text-sm">
+                                    <div class="material-icons !text-sm">
                                         north_east
-                                    </span>
+                                    </div>
                                 }
                                 @else{
-                                    <span class="material-icons !text-sm">
+                                    <div class="material-icons !text-sm">
                                         south_east
-                                    </span>
+                                    </div>
                                 }
-                                {{ item.delta > 0 ? '+' + (item.delta | number:'1.2-2') : (item.delta | number:'1.2-2') }}%
+                                <div class="w-[65px] ">
+                                    &nbsp;{{ item.delta > 0 ? '+' + (item.delta | number:'1.2-2') : (item.delta | number:'1.2-2') }}%
+                                </div>
+                                
                             </div>
                         </div>
                     }
