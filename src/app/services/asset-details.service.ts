@@ -9,8 +9,7 @@ import { initialValAPIResp } from '../shared/constants/constants'
   providedIn: 'root'
 })
 export class AssetDetailsService {
-
-  private apiUrl = environment.POLYGON_BASE_URL;
+  
   private apiUrlAplaca = environment.ALPACA_BASE_URL;
   private apiUrlFinnhub = environment.FINNHUB_BASE_URL;
   
@@ -28,7 +27,6 @@ export class AssetDetailsService {
   });
 
   constructor( private http: HttpClient ) {
-    this.apiUrl += 'tickers';
   }
 
   //Hybride implementation.

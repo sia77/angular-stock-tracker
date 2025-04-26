@@ -18,7 +18,7 @@ export class AssetSymbolsService {
   getAssetsPerformance():Observable<string[]>{
 
     if (!this.hasLoadedAssetSymbols){
-      this.http.get<any>('https://stocktrackerendpoint.netlify.app/.netlify/functions/marketPerformance')      
+      this.http.get<any>(`${environment.NETLIFY_BASE_URL}marketPerformance`)      
         .subscribe((data:any) => {
           this.assetSymbols$.next(data);      //this.assetSymbols$; -- short hand
           this.hasLoadedAssetSymbols = true;
