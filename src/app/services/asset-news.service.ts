@@ -10,6 +10,7 @@ import { TopNewsItem } from '../interface/news';
 export class AssetNewsService {
 
   private apiUrl = environment.FINNHUB_BASE_URL;
+  private netlifyAPIUrl = environment.NETLIFY_BASE_URL;
   private headers = new HttpHeaders({'X-Finnhub-Token':environment.FINNHUB_API_KEY})
   private cache = new Map<string, any>();
   //private generalNewsCache = new Map<string, any>();
@@ -48,9 +49,9 @@ export class AssetNewsService {
 
   getTopNewsPage(): Observable<TopNewsItem[]> {
 
-    const params = new HttpParams()
-      .set('category', 'general')
-      .set('token', environment.FINNHUB_API_KEY);
+    // const params = new HttpParams()
+    //   .set('category', 'general')
+    //   .set('token', environment.FINNHUB_API_KEY);
 
       if (this.dataFetched) {
     
@@ -65,7 +66,7 @@ export class AssetNewsService {
         return of(accumulatedResultSet); 
       }
 
-    return this.http.get<TopNewsItem[]>(`${this.apiUrl}news`, { params }).pipe(
+    return this.http.get<TopNewsItem[]>(`${this.netlifyAPIUrl}topNews`).pipe(
       tap(fetched => {
         // slice and append only the next chunk
         this.newsItems = fetched;

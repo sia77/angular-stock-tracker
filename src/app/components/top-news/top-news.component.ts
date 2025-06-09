@@ -3,11 +3,10 @@ import { AssetNewsService } from '../../services/asset-news.service';
 import { TopNewsItem } from '../../interface/news';
 import { Observable, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { SpinnerComponent } from "../shared/spinner/spinner.component";
 
 @Component({
   selector: 'app-top-news',
-  imports: [CommonModule, SpinnerComponent],
+  imports: [CommonModule],
   templateUrl: './top-news.component.html',
   styleUrl: './top-news.component.css'
 })
@@ -33,8 +32,7 @@ export class TopNewsComponent implements OnInit {
 
     if(!this.newsItemsLoaded){
       this.topNews.getTopNewsPage().subscribe(); 
-    }
-    
+    }    
 
   }
 

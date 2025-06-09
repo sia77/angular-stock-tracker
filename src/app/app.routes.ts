@@ -9,7 +9,7 @@ export const routes: Routes = [
     { path: '', component: HomeComponent }, 
     { path: 'about', component: AboutComponent }, 
     { path: 'search-result', component: SearchResultComponent },
-    { path: 'services', component: ServicesComponent },
+    // { path: 'services', component: ServicesComponent },
     { path: 'news', component: TopNewsComponent },
     // { path: '**', redirectTo: '', pathMatch: 'full' } // Wildcard route (redirect unknown paths)
   ];

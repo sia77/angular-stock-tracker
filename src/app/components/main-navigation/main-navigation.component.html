@@ -8,7 +8,7 @@
         <ul class="list-none flex space-x-5 invisible md:visible">            
             <li><a class="text-white no-underline " routerLink = "">Home</a></li>
             <li><a class="text-white no-underline" routerLink = "/about">About</a></li>
-            <li><a class="text-white no-underline" routerLink = '/services'>Services</a></li>
+            <!-- <li><a class="text-white no-underline" routerLink = '/services'>Services</a></li> -->
             <li><a class="text-white no-underline" routerLink = '/news'>Top News</a></li>
             <!-- <li><a class="text-white no-underline" routerLink = '/contact'>Contact Us</a></li>             -->
         </ul>    
@@ -26,10 +26,10 @@
     </nav>     
 
     <!-- Mobile Menu (hidden by default) -->
-    <ul [ngClass]="{'hidden': !isMenuOpen}"  class="menu list-none flex flex-col space-y-4 md:hidden hidden bg-stockTrackerBlack p-4 absolute top-16 left-0 w-full z-[9999]">
+    <ul [ngClass]="{'hidden': !isMenuOpen}"  class="menu list-none flex flex-col space-y-4 md:hidden  bg-stockTrackerBlack p-4 absolute top-16 left-0 w-full z-[9999]">
         <li><a class="text-white no-underline" routerLink="" (click)="toggleMenu()">Home</a></li>
         <li><a class="text-white no-underline" routerLink="/about" (click)="toggleMenu()">About</a></li>
-        <li><a class="text-white no-underline" routerLink="/services" (click)="toggleMenu()">Services</a></li>
+        <!-- <li><a class="text-white no-underline" routerLink="/services" (click)="toggleMenu()">Services</a></li> -->
         <li><a class="text-white no-underline" routerLink="/news" (click)="toggleMenu()">Top News</a></li>
         <!-- <li><a class="text-white no-underline" routerLink="/contact" (click)="toggleMenu()">Contact Us</a></li> -->
         <li class="h-px"></li>
