@@ -10,9 +10,9 @@
                         <a href={{item.url}} target="_blank">
                             <div class="flex items-center">
                                 <img
-                                    alt={{ item.headline }} 
+                                    [alt]="item.headline"
                                     class="w-12 h-12 rounded-full object-cover mr-5 border-2 border-stockTrackerBlue" 
-                                    src={{item.image}} />
+                                    [src]="item.image" />
                                 <div>{{ item.headline }}</div>
                             </div>
                         </a>
