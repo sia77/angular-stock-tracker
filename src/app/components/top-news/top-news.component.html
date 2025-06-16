@@ -9,7 +9,10 @@
                     <div class="bg-white flex items-center rounded-xl p-5 mb-2 shadow transform transition-all hover:-translate-y-1 hover:scale-[1.02] hover:shadow-lg animate-fade-in-up">
                         <a href={{item.url}} target="_blank">
                             <div class="flex items-center">
-                                <img class="w-12 h-12 rounded-full object-cover mr-5 border-2 border-stockTrackerBlue" src={{item.image}} />
+                                <img
+                                    alt={{ item.headline }} 
+                                    class="w-12 h-12 rounded-full object-cover mr-5 border-2 border-stockTrackerBlue" 
+                                    src={{item.image}} />
                                 <div>{{ item.headline }}</div>
                             </div>
                         </a>
