@@ -1,9 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, Subject, tap } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { BehaviorSubject, Subject, tap } from 'rxjs';
+import { environment } from '../../environments/environment.development';
+//import { environment } from '../../environments/environment';
 import { SearchResponse } from '../interface/assetInterfaces';
-import { initialValAPIHubRes } from '../shared/constants/constants';
+//import { initialValAPIHubRes } from '../shared/constants/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,9 @@ import { initialValAPIHubRes } from '../shared/constants/constants';
 export class SearchAssetService {
 
   constructor(private http:HttpClient) { }
-  private apiUrl = environment.FINNHUB_BASE_URL;
+  private netlifyAPIUrl = environment.NETLIFY_BASE_URL;
   private cache = new Map<string, SearchResponse>();
-  private searchResultsSource = new BehaviorSubject<SearchResponse>(initialValAPIHubRes);
+  private searchResultsSource = new BehaviorSubject<SearchResponse>({result:[]});
   searchResults$ = this.searchResultsSource.asObservable();
 
   private resetSearchSource = new Subject<string>();
@@ -29,13 +30,11 @@ export class SearchAssetService {
     }
 
     const params = new HttpParams()
-      .set('q', query)
-      .set('exchange', 'US')
-      .set('token', environment.FINNHUB_API_KEY);
+      .set('search', query);
 
-    this.http.get<any>(`${this.apiUrl}search`,{params}).pipe(
+    this.http.get<any>(`${this.netlifyAPIUrl}searchAssets`, {params}).pipe(
       tap((data) => this.cache.set(query, data) )
-    ).subscribe(data => {
+    ).subscribe(data => {      
       this.searchResultsSource.next(data); // Send results to subscribers
     });
 

@@ -1,19 +1,20 @@
 import { Component } from '@angular/core';
-import { SearchResponse, SearchResultItem } from '../../interface/assetInterfaces';
+import { AssetInfo, SearchResponse } from '../../interface/assetInterfaces';
 import { MatButtonModule } from '@angular/material/button';
 import { AssetDetailComponent } from '../asset-detail/asset-detail.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { SearchAssetService } from '../../services/search-asset.service';
+import { AppStockCardComponent } from "../app-stock-card/app-stock-card.component";
 
 
 @Component({
   selector: 'app-search-result',
-  imports: [MatButtonModule,MatDialogModule],
+  imports: [MatButtonModule, MatDialogModule, AppStockCardComponent],
   templateUrl: './search-result.component.html',
   styleUrl: './search-result.component.css'
 })
 export class SearchResultComponent {  
-    tickerList:SearchResultItem[] = [];
+    tickerList:AssetInfo[] = [];
     limit:number = 100;
     status!:string;
     errorMessage!:string;
@@ -28,7 +29,7 @@ export class SearchResultComponent {
     this.searchAssetService.searchResults$.subscribe({
       next: (data:SearchResponse)=>{
         this.tickerList = data.result;
-        this.tickerCount = data.count;
+        //this.tickerCount = data.count;
       }
     })
   }

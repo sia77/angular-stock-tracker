@@ -49,10 +49,6 @@ export class AssetNewsService {
 
   getTopNewsPage(): Observable<TopNewsItem[]> {
 
-    // const params = new HttpParams()
-    //   .set('category', 'general')
-    //   .set('token', environment.FINNHUB_API_KEY);
-
       if (this.dataFetched) {
     
         this.currentPage++;

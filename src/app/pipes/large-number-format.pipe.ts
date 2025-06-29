@@ -15,7 +15,7 @@ export class LargeNumberFormatPipe implements PipeTransform {
     } else if (value >= 1_000) {
       return (value / 1_000).toFixed(2) + ' K';
     } else {
-      return value.toString();
+      return value.toFixed(2);
     }
   }
 

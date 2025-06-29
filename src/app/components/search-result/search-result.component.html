@@ -1,23 +1,29 @@
 
-<section class="max-w-[1220px] flex flex-wrap gap-y-4">
+<section class="max-w-[1220px]">
     @for (item of tickerList; track item.symbol) {
                 
-        <div class="ml-2">
-            <button
-                mat-flat-button 
-                class="!bg-stockTrackerBlue !text-white ticker-button" 
-                (click)="openAssetDetail(item.symbol, item.description)">{{item.symbol}}</button>            
-        </div>
+        <app-app-stock-card
+            [symbol]="item.symbol"
+            [companyName]="item.name"
+            [closePrice] = "item.close"
+            [priceChange] = "+item.change"
+            [marketCap] = "item.marketCap"
+            [volume] = "item.volume"
+            [low] = "item.low"
+            [high] = "item.high"
+            [moreLink]="'/stock/max'"
+            [onOpenDetail]="openAssetDetail.bind(this)"
+        ></app-app-stock-card>
     } 
     @empty {
         @switch (tickerCount) {
             
             @case (0){
-                <h3 class="w-full flex justify-center">No item matched your search query...</h3>
+                <h3 class="w-full flex justify-center text-[#596479]">No item matched your search query...</h3>
             } 
 
             @case(-1){
-                <h3 class="w-full flex justify-center">Using searchbox, lookup your desired ticker...</h3>
+                <h3 class="w-full flex justify-center text-[#596479]">Using searchbox, lookup your desired ticker...</h3>
             }            
         }
     }

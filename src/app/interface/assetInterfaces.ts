@@ -14,6 +14,30 @@ export interface AssetProfile {
   weburl: string; // URL string
 }
 
+export interface AssetInfo {
+  id: string;
+  symbol: string;
+  name: string;
+  type: string;
+  exchange: string;
+  currency: string;
+  logo: string;
+  weburl: string;
+  ipo: string;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  prevC: number;
+  change: string;
+  volume: number;
+  marketCap: number;
+  shareOutstanding: number;
+}
+
+
+
+
 //Asset Details
 export interface Address {
   address1: string;
@@ -57,16 +81,16 @@ export interface AssetMetrics {
   };
 }
 
-export interface SearchResultItem {
-  description: string;
-  displaySymbol: string;
-  symbol: string;
-  type: string; 
-}
+// export interface SearchResultItem {
+//   description: string;
+//   displaySymbol: string;
+//   symbol: string;
+//   type: string; 
+// }
 
 export interface SearchResponse {
-  count: number;
-  result: SearchResultItem[];
+  //count: number;
+  result: AssetInfo[];
 }
 
 export interface assetDelta{

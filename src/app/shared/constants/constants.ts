@@ -16,4 +16,4 @@ export const initialValAPIResp:AssetProfile = {
     ticker: '',
     weburl: ''
 };
-export const initialValAPIHubRes:SearchResponse = { count : -1, result:[]};
+//export const initialValAPIHubRes:SearchResponse = { count : -1, result:[]};
