@@ -1,60 +1,52 @@
-<div class="bg-white text-gray-900 p-6 rounded-2xl shadow-sm mb-[16px] hover:shadow-md transition-transform transform hover:-translate-y-1 hover:scale-[1.01]">
-  <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
-    
-    <!-- Symbol & Company -->
+<div class="bg-white mb-4 p-4 border border-gray-300 rounded-xl shadow-none transform transition-all hover:-translate-y-1 hover:scale-[1.02] hover:shadow-lg">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 items-center px-2 md:px-6">
     <div>
-      <h2 class="text-xl font-bold tracking-wide text-gray-800">{{ symbol }}</h2>
-      <p class="text-sm text-gray-500">{{ companyName }}</p>
+        <div class="text-lg font-semibold">{{symbol}}</div>
+        <div class="text-sm text-gray-500">{{ companyName }}</div>
     </div>
 
-    <!-- Price -->
-    <div class="flex items-center gap-2">
-      <div>
-        <p class="text-xs text-gray-500">Close</p>
-        <p
-          class="text-lg font-semibold flex items-center gap-1"
-          [ngClass]="isNegativeChange ? 'text-stockTrackerRed' : 'text-green-600'"
-        >
-          {{ formattedPriceChange   }}
-          <svg *ngIf="isNegativeChange" xmlns="http://www.w3.org/2000/svg" class="lucide lucide-arrow-down w-4 h-4 text-stockTrackerRed" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path d="M12 5v14"></path>
-            <path d="m19 12-7 7-7-7"></path>
-          </svg>
-          <svg *ngIf="!isNegativeChange" xmlns="http://www.w3.org/2000/svg" class="lucide lucide-arrow-up w-4 h-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path d="M12 19V5"></path>
-            <path d="m5 12 7-7 7 7"></path>
-          </svg>
-        </p>
+    <div>
+      <div class="text-xs text-gray-500">Close</div>
+      <div
+        class="text-lg font-semibold flex items-center gap-1"
+        [ngClass]="isNegativeChange ? 'text-stockTrackerRed' : 'text-green-600'"
+      >
+        {{ formattedPriceChange }}
+        <svg *ngIf="isNegativeChange" xmlns="http://www.w3.org/2000/svg" class="lucide lucide-arrow-down w-4 h-4 text-stockTrackerRed" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M12 5v14"></path>
+          <path d="m19 12-7 7-7-7"></path>
+        </svg>
+        <svg *ngIf="!isNegativeChange" xmlns="http://www.w3.org/2000/svg" class="lucide lucide-arrow-up w-4 h-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M12 19V5"></path>
+          <path d="m5 12 7-7 7 7"></path>
+        </svg>
       </div>
     </div>
 
-    <!-- CTA -->
-    <div class="mt-2 md:mt-0">
+    <div>
+        <div class="text-xs text-gray-500">Market Cap</div>
+        <div class="text-base font-medium">{{ marketCap * 1000000 | largeNumberFormat }}</div>
+    </div>
+
+    <div>
+      <div class="text-gray-500">Volume</div>
+      <div class="font-medium">{{ volume | largeNumberFormat }}</div>
+    </div>
+
+    <div class="col-span-1 md:col-span-1">
+        <div class="text-xs text-gray-500">Day Range</div>
+        <div class="text-base font-medium">
+            {{low.toFixed(2)}} - {{high.toFixed(2)}}
+        </div>
+    </div>   
+    
+    <div class="md:col-start-4">                                  
       <a                 
-        class="inline-block bg-stockTrackerBlue text-white text-sm font-semibold px-4 py-2 rounded-md hover:bg-[#427a8e] transition cursor-pointer" 
+        class="inline-block bg-stockTrackerBlue text-white text-sm font-semibold px-4 py-2 rounded-md hover:bg-[#a3d5e7] transition cursor-pointer" 
         (click)="onOpenDetail(symbol, companyName)">
         More
       </a>
-    </div>
-  </div>
+    </div>    
 
-  <!-- Divider -->
-  <div class="my-4 border-t text-gray-200"></div>
-
-  <!-- Bottom metrics -->
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-    <div>
-      <p class="text-gray-500">Market Cap</p>
-      <p class="font-medium">{{ marketCap * 1000000 | largeNumberFormat }}</p>
-    </div>
-    <div>
-      <p class="text-gray-500">Volume</p>
-      <p class="font-medium">{{ volume | largeNumberFormat }}</p>
-    </div>
-    <div>
-      <p class="text-gray-500">Day Range</p>
-      <p class="font-medium">{{ low | largeNumberFormat }} - {{high | largeNumberFormat }}</p>
-    </div>
   </div>
 </div>
-
