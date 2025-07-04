@@ -62,7 +62,6 @@ export class SearchBarComponent {
   ngOnDestroy(): void {
     this.searchTerms?.unsubscribe();
     this.routerSub?.unsubscribe();
-
   }
 
 }

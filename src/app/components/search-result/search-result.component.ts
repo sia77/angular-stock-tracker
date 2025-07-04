@@ -29,7 +29,7 @@ export class SearchResultComponent {
     this.searchAssetService.searchResults$.subscribe({
       next: (data:SearchResponse)=>{
         this.tickerList = data.result;
-        //this.tickerCount = data.count;
+        this.tickerCount = this.tickerList.length;
       }
     })
   }
